@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import com.tohome.bundlebundle.cart.vo.CartProductVO;
 import com.tohome.bundlebundle.cart.vo.CartVO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "api/cart")
@@ -47,9 +49,9 @@ public class MyCartController {
 	
 	// 개인 장바구니에 상품 추가하기
 	@PostMapping(value = "")
-	public ResponseEntity<CartItemAddVO> addItemCart(CartItemAddVO cartItemAddVO){
-		
-		int result = service.AddCartItem(cartItemAddVO);
+	public ResponseEntity<CartItemAddVO> addItemCart(@RequestBody CartItemAddVO cartItemAddVO){
+		System.out.println("넘어온 값" + cartItemAddVO);
+		int result = service.addCartItem(cartItemAddVO);
 		
 		if(result>0) {
 			CartItemAddVO success = cartItemAddVO;
@@ -57,7 +59,6 @@ public class MyCartController {
 		}else {
 			return null;
 		}
-		
 	}
 	
 	// 개인 장바구니에 상품 삭제하기
@@ -65,7 +66,7 @@ public class MyCartController {
 	@ResponseBody
 	public ResponseEntity<String> deleteCart(@PathVariable int productId){
 		System.out.println("안드로이드에서 값이 왔어요!!" + productId);
-		int check = service.DeleteCartItem(productId);
+		int check = service.deleteCartItem(productId);
 
 		String message;
 		if(check>0) {

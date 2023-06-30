@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class CartItemAddVO {
 	private int productId;
 	private int memberId;
-	private int productCnt;
 }

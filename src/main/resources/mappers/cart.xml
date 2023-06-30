@@ -9,7 +9,7 @@
         <![CDATA[
          select
     		a.id as cart_id,
-    		b.id as prduct_id,
+    		b.id as product_id,
     		b.origin as product_origin,
 		    b.brand as product_brand,
 		    b.name as product_name,
@@ -19,5 +19,14 @@
 		    where a.member_id=#{memberId}
         ]]>
     </select>
+    
+    <insert id="addCartItem" parameterType="CartItemAddVO" >
+    	<![CDATA[
+    		INSERT INTO PERSONAL_CART (PRODUCT_ID, MEMBER_ID)
+			VALUES (#{productId},#{memberId})
+    	]]>
+    </insert>
+    
+    
 	
 </mapper>

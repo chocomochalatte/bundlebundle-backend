@@ -13,9 +13,9 @@ public interface CartService {
 	//개인 장바구니 조회해서 출력하는 곳
 	List<CartProductVO> showItem(int memberId);
 
-	int AddCartItem(CartItemAddVO cartItemAddVO);
+	int addCartItem(CartItemAddVO cartItemAddVO);
 
-	int DeleteCartItem(int productId);
+	int deleteCartItem(int productId);
 
 	
 
