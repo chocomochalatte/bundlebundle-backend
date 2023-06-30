@@ -1,6 +1,6 @@
-package com.tohome.bundlebundle.mapper;
+package com.tohome.bundlebundle.product.mapper;
 
-import com.tohome.bundlebundle.product.ProductVO;
+import com.tohome.bundlebundle.product.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
