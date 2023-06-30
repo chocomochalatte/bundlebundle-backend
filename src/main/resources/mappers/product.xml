@@ -5,10 +5,22 @@
 
 <mapper namespace="com.tohome.bundlebundle.mapper.ProductMapper">
 
-    <select id="showProducts" resultType="ProductVO">
+    <select id="findAllProductsByPopularity" resultType="ProductVO">
         <![CDATA[
         SELECT * FROM PRODUCT
+        ORDER BY ID
         ]]>
+        <!-- 수정 필요 -->
+    </select>
+
+
+    <select id="findAllProductsByLatest" resultType="ProductVO">
+        <![CDATA[
+        SELECT * FROM PRODUCT
+        ORDER BY CREATED_AT
+        ]]>
+
+
     </select>
 
 </mapper>
