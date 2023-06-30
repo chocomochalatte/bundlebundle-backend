@@ -1,6 +1,7 @@
-package com.tohome.bundlebundle.product;
+package com.tohome.bundlebundle.product.controller;
 
-import com.tohome.bundlebundle.product.ProductVO;
+import com.tohome.bundlebundle.product.service.ProductService;
+import com.tohome.bundlebundle.product.vo.ProductVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,6 @@
-package com.tohome.bundlebundle.product;
+package com.tohome.bundlebundle.product.service;
+
+import com.tohome.bundlebundle.product.vo.ProductVO;
 
 import java.util.List;
 

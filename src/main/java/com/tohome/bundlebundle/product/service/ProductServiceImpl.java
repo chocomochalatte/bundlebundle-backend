@@ -1,8 +1,9 @@
-package com.tohome.bundlebundle.product;
+package com.tohome.bundlebundle.product.service;
 
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
-import com.tohome.bundlebundle.mapper.ProductMapper;
+import com.tohome.bundlebundle.product.vo.ProductVO;
+import com.tohome.bundlebundle.product.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
