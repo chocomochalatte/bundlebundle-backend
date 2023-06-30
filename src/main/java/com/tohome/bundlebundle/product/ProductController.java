@@ -23,11 +23,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<?> showProducts(@RequestParam("sort") String sortType) {
 
-//        if (sortType.equals("best")) {
-//
-//        }
-
-        List<ProductVO> result = productService.showProducts();
+        List<ProductVO> result = productService.showProducts(sortType);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

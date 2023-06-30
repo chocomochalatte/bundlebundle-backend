@@ -8,6 +8,13 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
 
-//    @Select("select * from products")
-    List<ProductVO> showProducts();
+    List<ProductVO> findAllProductsByPopularity();
+
+    List<ProductVO> findAllProductsByLatest();
+
+    List<ProductVO> findAllProductsPriceAsc();
+
+    List<ProductVO> findAllProductsByPriceDesc();
+
+    List<ProductVO> findAllProductsByDiscount();
 }
