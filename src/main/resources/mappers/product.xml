@@ -13,14 +13,32 @@
         <!-- 수정 필요 -->
     </select>
 
-
     <select id="findAllProductsByLatest" resultType="ProductVO">
         <![CDATA[
         SELECT * FROM PRODUCT
-        ORDER BY CREATED_AT
+        ORDER BY CREATED_AT DESC
         ]]>
+    </select>
 
+    <select id="findAllProductsPriceAsc" resultType="ProductVO">
+        <![CDATA[
+        SELECT * FROM PRODUCT
+        ORDER BY PRICE ASC
+        ]]>
+    </select>
 
+    <select id="findAllProductsByPriceDesc" resultType="ProductVO">
+        <![CDATA[
+        SELECT * FROM PRODUCT
+        ORDER BY PRICE DESC
+        ]]>
+    </select>
+
+    <select id="findAllProductsByDiscount" resultType="ProductVO">
+        <![CDATA[
+        SELECT * FROM PRODUCT
+        ORDER BY ID
+        ]]>
     </select>
 
 </mapper>
