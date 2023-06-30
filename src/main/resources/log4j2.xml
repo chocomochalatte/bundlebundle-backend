@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration>
+
+	<Appenders>
+		<File name="File_1" fileName="c:/log_test/myLog_1.log"
+			append="true">
+			<PatternLayout pattern="%t %-5p %c{2} - %m%n" />
+		</File>
+		<File name="File_2" fileName="c:/log_test/myLog_2.log"
+			append="true">
+			<PatternLayout pattern="%d - %m%n" />
+		</File>
+		<Console name="stdout_1" target="SYSTEM_OUT">
+			<PatternLayout pattern="%p == %m == %d%n" />
+		</Console>
+		<Console name="stdout_2" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd:HH:mm} >> %m%n" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+
+		<Logger name="common_logger" level="debug" additivity="false">
+			<AppenderRef ref="stdout_1" />
+		</Logger>
+
+		<Root level="debug">
+			<AppenderRef ref="stdout_2" />
+		</Root>
+
+	</Loggers>
+
+</Configuration>
