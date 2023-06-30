@@ -41,4 +41,11 @@
         ]]>
     </select>
 
+    <select id="findProductById" resultType="ProductVO">
+        <![CDATA[
+        SELECT * FROM PRODUCT
+        WHERE ID = #{productId}
+        ]]>
+    </select>
+
 </mapper>
