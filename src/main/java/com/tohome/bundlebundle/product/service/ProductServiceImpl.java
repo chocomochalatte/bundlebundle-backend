@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Log4j2
@@ -31,11 +32,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductVO> showProducts(String sortType) {
-        Function<ProductServiceImpl, List<ProductVO>> sortMethod = SORT_METHODS.get(sortType);
-        if (sortMethod == null) {
-            throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
-        }
+        Function<ProductServiceImpl, List<ProductVO>> sortMethod = Optional.ofNullable(SORT_METHODS.get(sortType))
+                .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_INPUT_VALUE));
         return sortMethod.apply(this);
+    }
+
+    @Override
+    public ProductVO showProductDetail(Integer productId) {
+        ProductVO result = productMapper.findProductById(productId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
+        return result;
     }
 
 //    @Override
