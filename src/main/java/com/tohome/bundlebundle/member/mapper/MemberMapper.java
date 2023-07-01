@@ -13,6 +13,5 @@ public interface MemberMapper {
 
     Optional<Integer> findGroupIdById(Integer memberId);
 
-    Integer updateGroupNickname(GroupMemberVO groupMemberVO);
-
+    Integer updateMemberGroup(GroupMemberVO groupMemberVO);
 }

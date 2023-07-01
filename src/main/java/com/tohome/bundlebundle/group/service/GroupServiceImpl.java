@@ -43,7 +43,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     private void updateGroupNickname(GroupMemberVO groupMemberVO) {
-        Integer result = memberMapper.updateGroupNickname(groupMemberVO);
+        Integer result = memberMapper.updateMemberGroup(groupMemberVO);
         validateQueryResult(result);
     }
 

@@ -2,6 +2,7 @@ package com.tohome.bundlebundle.member.service;
 
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
+import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.member.mapper.MemberMapper;
 import com.tohome.bundlebundle.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
@@ -25,4 +26,12 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
         return memberVO;
     }
+
+    @Override
+    public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
+        groupMemberVO.updateMemberId(memberId);
+        memberMapper.updateMemberGroup(groupMemberVO);
+        return groupMemberVO;
+    }
+
 }

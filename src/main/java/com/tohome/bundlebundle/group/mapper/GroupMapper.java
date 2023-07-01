@@ -1,5 +1,6 @@
 package com.tohome.bundlebundle.group.mapper;
 
+import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.group.vo.GroupVO;
 import org.apache.ibatis.annotations.Mapper;
 
