@@ -11,6 +11,7 @@ import com.tohome.bundlebundle.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Log4j2
@@ -20,6 +21,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
 
     @Override
+    @Transactional
     public MemberGroupNicknameVO updateGroupNickname(Integer memberId, GroupNicknameVO groupNicknameVO) {
         checkMemberId(memberId);
         MemberGroupNicknameVO memberGroupNicknameVO = new MemberGroupNicknameVO(memberId, groupNicknameVO);
@@ -35,6 +37,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
         checkMemberId(memberId);
         groupMemberVO.addMemberId(memberId);
@@ -49,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public Integer getOutOfGroup(Integer memberId) {
         checkMemberId(memberId);
 
