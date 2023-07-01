@@ -45,8 +45,11 @@ public class MyCartController {
 	
 	
 	// 개인 장바구니에 상품 조회하기 (추가 전에 중복 확인)
-	@GetMapping(value = "check")
-	public ResponseEntity<CheckVO> checkItemCart(CartItemAddVO cartItemAddVO){
+	@GetMapping(value = "check/{memberId}/{productId}")
+	public ResponseEntity<CheckVO> checkItemCart(@PathVariable("memberId") int memberId, @PathVariable("productId") int productId){
+		CartItemAddVO cartItemAddVO = new CartItemAddVO();
+	    cartItemAddVO.setMemberId(memberId);
+	    cartItemAddVO.setProductId(productId);
 		CheckVO result = service.checkItemCart(cartItemAddVO);
 		return new ResponseEntity<CheckVO>(result, HttpStatus.OK);
 	}
@@ -72,6 +75,8 @@ public class MyCartController {
 	    cartItemAddVO.setProductId(productId);
 		
 	    CheckVO result = service.deleteCartItem(cartItemAddVO);
+	    
+	    
 		return new ResponseEntity<CheckVO>(result, HttpStatus.OK);
 	}
 	

@@ -36,6 +36,13 @@
     	]]>
     </insert>
     
+    <delete id="deleteItem" parameterType="CartItemAddVO">
+    	<![CDATA[
+    		delete from personal_cart 
+    		where member_id= #{memberId} and product_id=#{productId}
+    	]]>
+    </delete>
+    
     
 	
 </mapper>

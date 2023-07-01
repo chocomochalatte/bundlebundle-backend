@@ -85,8 +85,26 @@ public class MyCartServiceImpl implements CartService{
 	// 개인 장바구니에서 상품 삭제하는 곳
 	@Override
 	public CheckVO deleteCartItem(CartItemAddVO cartItemAddVO) {
-		// TODO Auto-generated method stub
-		return null;
+		CheckVO checkVO = new CheckVO();
+		
+		TransactionStatus txStatus =
+				transactionManager.getTransaction(
+						new DefaultTransactionDefinition());
+		
+		try {
+			mycartMapper.deleteItem(cartItemAddVO);
+			transactionManager.commit(txStatus);
+			checkVO.setMessage("장바구니 담은 상품이 삭제되었습니다.");
+			checkVO.setExists(true);
+			return checkVO;
+		} catch (Exception e) {
+			checkVO.setMessage("장바구니 담은 상품이 삭제되지 않았습니다.");
+			checkVO.setExists(false);
+			transactionManager.rollback(txStatus);
+			return checkVO;
+		}
+		
+		
 	}
 
 	

@@ -13,4 +13,6 @@ public interface MyCartMapper {
 	int addCartItem(CartItemAddVO cartItemAddVO);
 
 	CartProductVO checkItemCart(CartItemAddVO cartItemAddVO);
+
+	void deleteItem(CartItemAddVO cartItemAddVO);
 }
