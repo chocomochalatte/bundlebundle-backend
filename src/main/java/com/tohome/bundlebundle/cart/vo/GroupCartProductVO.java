@@ -1,5 +1,12 @@
 package com.tohome.bundlebundle.cart.vo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class GroupCartProductVO {
 	private int productId;
 	private String productOrigin;
@@ -8,7 +15,4 @@ public class GroupCartProductVO {
 	private String productThumbnailImg;
 	private	int productPrice;
 	private int productCnt;
-	private int memberId;
-	private int cartCnt;
-	private String groupNickname;
 }

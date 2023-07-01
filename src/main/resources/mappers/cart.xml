@@ -71,4 +71,47 @@
     	]]>
     </update>
 	
+	
+	<!-- 여기서 부터 그룹카트 로직 -->
+	<select id="groupCheck" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+         select count(*) from "GROUP" where id=#{groupId}
+        ]]>
+    </select>
+	
+	
+	<select id="checkMember" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+         select distinct member_id from group_member_cart
+		 where group_id=#{groupId}
+        ]]>
+    </select>
+    
+    <select id="getnickName" parameterType="Integer" resultType="String">
+        <![CDATA[
+         select group_nickname from member
+         where id=#{memberId}
+        ]]>
+    </select>
+    
+    <select id="showGroupItem" parameterType="Integer" resultType="GroupCartProductVO">
+        <![CDATA[
+         select
+         	g.product_cnt,
+         	g.product_id, 
+		    p.origin as product_origin,
+		    p.brand as product_brand,
+		    p.name as product_name,
+		    p.thumbnail_img as product_thumbnail_img, 
+		    p.price as product_price
+		from group_member_cart g 
+		join member m on g.member_id=m.id
+		join product p on g.product_id=p.id
+		where g.member_id=#{memberId}
+        ]]>
+    </select>
+    
+    
+    
+    
 </mapper>
