@@ -1,6 +1,7 @@
 package com.tohome.bundlebundle.group.vo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

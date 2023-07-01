@@ -1,5 +1,6 @@
 package com.tohome.bundlebundle.group.service;
 
+import com.tohome.bundlebundle.common.ObjectValidator;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
 import com.tohome.bundlebundle.group.mapper.GroupMapper;
@@ -37,7 +38,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Integer findOwningGroupId(Integer memberId) {
         Integer groupId = groupMapper.findGroupIdByGroupOwnerId(memberId);
-        validateNonNullObject(groupId);
+        ObjectValidator.validateNonNullObject(groupId);
         return groupId;
     }
 
@@ -47,26 +48,14 @@ public class GroupServiceImpl implements GroupService {
         checkIfGroupExists(groupId);
 
         Integer result = groupMapper.createGroup(groupVO);
-        validateQueryResult(result);
-        validateNonNullObject(groupVO.getId());
+        ObjectValidator.validateQueryResult(result);
+        ObjectValidator.validateNonNullObject(groupVO.getId());
         return groupVO;
     }
 
     private void updateGroupNickname(GroupMemberVO groupMemberVO) {
-        Integer result = memberMapper.updateMemberGroup(groupMemberVO);
-        validateQueryResult(result);
-    }
-
-    private void validateQueryResult(Integer result) {
-        if (result == 0) {
-            throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
-        }
-    }
-
-    private void validateNonNullObject(Object object) {
-        if (object == null) {
-            throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
-        }
+        Integer result = memberMapper.updateGroup(groupMemberVO);
+        ObjectValidator.validateQueryResult(result);
     }
 
     private void checkIfGroupExists(Integer groupId) {

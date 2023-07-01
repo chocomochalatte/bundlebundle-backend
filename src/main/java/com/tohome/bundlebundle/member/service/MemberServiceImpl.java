@@ -1,14 +1,17 @@
 package com.tohome.bundlebundle.member.service;
 
+import com.tohome.bundlebundle.common.ObjectValidator;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
-import com.tohome.bundlebundle.group.vo.GroupIdVO;
 import com.tohome.bundlebundle.group.vo.GroupMemberVO;
+import com.tohome.bundlebundle.group.vo.GroupNicknameVO;
 import com.tohome.bundlebundle.member.mapper.MemberMapper;
+import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
 import com.tohome.bundlebundle.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+
 
 @Log4j2
 @Service
@@ -26,8 +29,18 @@ public class MemberServiceImpl implements MemberService {
     public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
         validateMemberId(memberId);
         groupMemberVO.addMemberId(memberId);
-        memberMapper.updateMemberGroup(groupMemberVO);
+        Integer result = memberMapper.updateGroup(groupMemberVO);
+        ObjectValidator.validateQueryResult(result);
         return groupMemberVO;
+    }
+
+    @Override
+    public MemberGroupNicknameVO updateGroupNickname(Integer memberId, GroupNicknameVO groupNicknameVO) {
+        validateMemberId(memberId);
+        MemberGroupNicknameVO memberGroupNicknameVO = new MemberGroupNicknameVO(memberId, groupNicknameVO);
+        Integer result =  memberMapper.updateGroupNickname(memberGroupNicknameVO);
+        ObjectValidator.validateQueryResult(result);
+        return memberGroupNicknameVO;
     }
 
     private MemberVO findMemberById(Integer memberId) {

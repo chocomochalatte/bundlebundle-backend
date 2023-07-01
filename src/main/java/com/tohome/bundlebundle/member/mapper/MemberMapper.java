@@ -1,7 +1,7 @@
 package com.tohome.bundlebundle.member.mapper;
 
-import com.tohome.bundlebundle.group.vo.GroupIdVO;
 import com.tohome.bundlebundle.group.vo.GroupMemberVO;
+import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
 import com.tohome.bundlebundle.member.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,5 +14,7 @@ public interface MemberMapper {
 
     Integer findGroupIdById(Integer memberId);
 
-    Integer updateMemberGroup(GroupMemberVO groupMemberVO);
+    Integer updateGroup(GroupMemberVO groupMemberVO);
+
+    Integer updateGroupNickname(MemberGroupNicknameVO memberGroupNicknameVO);
 }

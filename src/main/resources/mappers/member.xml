@@ -19,10 +19,17 @@
         ]]>
     </select>
 
-    <update id="updateMemberGroup" parameterType="GroupMemberVO">
+    <update id="updateGroup" parameterType="GroupMemberVO">
         <![CDATA[
         UPDATE MEMBER SET GROUP_NICKNAME = #{groupNickname}, GROUP_ID = #{groupId}
         WHERE id = #{memberId}
+        ]]>
+    </update>
+
+    <update id="updateGroupNickname" parameterType="MemberGroupNicknameVO">
+        <![CDATA[
+        UPDATE MEMBER SET GROUP_NICKNAME = #{groupNickname}
+        WHERE id = #{id}
         ]]>
     </update>
 
