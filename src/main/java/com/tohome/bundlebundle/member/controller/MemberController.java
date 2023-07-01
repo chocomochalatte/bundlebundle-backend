@@ -1,7 +1,7 @@
 package com.tohome.bundlebundle.member.controller;
 
-import com.tohome.bundlebundle.BooleanResponseVO;
 import com.tohome.bundlebundle.TempTokenUtil;
+import com.tohome.bundlebundle.group.vo.GroupIdVO;
 import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class MemberController {
     @GetMapping("/group-check")
     public ResponseEntity<?> hasGroupCart(@RequestHeader("Authorization") String accessToken) {
         Integer memberId = tokenUtil.extractMemberId(accessToken);
-        boolean result = memberService.hasGroupCart(memberId);
-        return ResponseEntity.ok(new BooleanResponseVO(result));
+        Integer groupId = memberService.findPresentGroupId(memberId);
+        return ResponseEntity.ok(new GroupIdVO(groupId));
     }
 
     @PostMapping("/group-join")

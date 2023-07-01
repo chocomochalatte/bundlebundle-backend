@@ -18,7 +18,7 @@ public class GroupMemberVO {
         this.groupNickname = groupNicknameVO.getGroupNickname();
     }
 
-    public void updateMemberId(Integer memberId) {
+    public void addMemberId(Integer memberId) {
         this.memberId = memberId;
     }
 

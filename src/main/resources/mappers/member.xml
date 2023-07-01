@@ -5,7 +5,7 @@
 
 <mapper namespace="com.tohome.bundlebundle.member.mapper.MemberMapper">
     
-    <select id="findMemberById" resultType="MemberVO">
+    <select id="findMemberById" resultType="Integer">
         <![CDATA[
         SELECT GROUP_ID FROM MEMBER
         WHERE ID = #{memberId}

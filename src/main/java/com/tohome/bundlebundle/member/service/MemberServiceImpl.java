@@ -2,6 +2,7 @@ package com.tohome.bundlebundle.member.service;
 
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
+import com.tohome.bundlebundle.group.vo.GroupIdVO;
 import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.member.mapper.MemberMapper;
 import com.tohome.bundlebundle.member.vo.MemberVO;
@@ -16,9 +17,17 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
 
     @Override
-    public boolean hasGroupCart(Integer memberId) {
-        findMemberById(memberId);
-        return memberMapper.findGroupIdById(memberId).isPresent();
+    public Integer findPresentGroupId(Integer memberId) {
+        validateMemberId(memberId);
+        return memberMapper.findGroupIdById(memberId);
+    }
+
+    @Override
+    public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
+        validateMemberId(memberId);
+        groupMemberVO.addMemberId(memberId);
+        memberMapper.updateMemberGroup(groupMemberVO);
+        return groupMemberVO;
     }
 
     private MemberVO findMemberById(Integer memberId) {
@@ -27,11 +36,8 @@ public class MemberServiceImpl implements MemberService {
         return memberVO;
     }
 
-    @Override
-    public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
-        groupMemberVO.updateMemberId(memberId);
-        memberMapper.updateMemberGroup(groupMemberVO);
-        return groupMemberVO;
+    private void validateMemberId(Integer memberId) {
+        memberMapper.findMemberById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
     }
-
 }
