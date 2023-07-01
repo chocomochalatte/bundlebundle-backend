@@ -3,6 +3,12 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="member">
+<mapper namespace="com.tohome.bundlebundle.member.mapper.MemberMapper">
 
+    <update id="updateGroupNickname" parameterType="GroupMemberVO">
+        <![CDATA[
+        UPDATE MEMBER SET GROUP_NICKNAME = #{groupNickname}, GROUP_ID = #{groupId}
+        WHERE id = #{memberId}
+        ]]>
+    </update>
 </mapper>

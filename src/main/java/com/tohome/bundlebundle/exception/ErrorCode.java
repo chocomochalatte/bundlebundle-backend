@@ -13,6 +13,7 @@ public enum ErrorCode {
     GROUP_NOT_FOUND("GROUP_NOT_FOUND", "존재하지 않는 그룹 ID입니다.", 404),
     INVALID_GROUP_NICKNAME("INVALID_POINT_VALUE", "유효하지 않은 그룹 닉네임입니다.", 400),
     INVALID_ORDER_TYPE("INVALID_ORDER_TYPE", "유효하지 않은 정렬 기준입니다.", 400),
+    DB_QUERY_EXECUTION_ERROR("DB_QUERY_EXECUTION_ERROR", "쿼리가 정상적으로 실행되지 않았습니다.", 400),
 
     // Spring Basic Exceptions
     INVALID_INPUT_VALUE("INVALID_INPUT_VALUE", "유효하지 않은 입력값입니다.", 400),

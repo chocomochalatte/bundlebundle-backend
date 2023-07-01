@@ -1,0 +1,11 @@
+package com.tohome.bundlebundle.group.mapper;
+
+import com.tohome.bundlebundle.group.vo.GroupVO;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface GroupMapper {
+
+    Integer createGroup(GroupVO groupNicknameVO);
+
+}
