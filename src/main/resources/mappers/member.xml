@@ -5,6 +5,13 @@
 
 <mapper namespace="com.tohome.bundlebundle.member.mapper.MemberMapper">
 
+    <select id="hasGroupCart" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+        SELECT GROUP_ID FROM MEMBER
+        WHERE ID = #{memberId}
+        ]]>
+    </select>
+
     <update id="updateGroupNickname" parameterType="GroupMemberVO">
         <![CDATA[
         UPDATE MEMBER SET GROUP_NICKNAME = #{groupNickname}, GROUP_ID = #{groupId}
