@@ -20,6 +20,15 @@
         ]]>
     </select>
     
+    <select id="checkItemCart" parameterType="CartItemAddVO" resultType="CartProductVO">
+        <![CDATA[
+         	select * from personal_cart
+    		where member_id=#{memberId} and product_id=#{productId}
+        ]]>
+    </select>
+    
+    
+    
     <insert id="addCartItem" parameterType="CartItemAddVO" >
     	<![CDATA[
     		INSERT INTO PERSONAL_CART (PRODUCT_ID, MEMBER_ID)

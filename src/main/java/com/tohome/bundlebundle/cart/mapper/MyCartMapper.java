@@ -11,4 +11,6 @@ public interface MyCartMapper {
 	List<CartProductVO> showMyItem(int memberId);
 	
 	int addCartItem(CartItemAddVO cartItemAddVO);
+
+	CartProductVO checkItemCart(CartItemAddVO cartItemAddVO);
 }
