@@ -18,6 +18,7 @@ public enum ErrorCode {
     GROUP_IS_NOT_EMPTY("GROUP_IS_NOT_EMPTY", "그룹 장바구니에 참여하고 있는 다른 사용자가 아직 있습니다.", 400),
     NOT_A_GROUP_OWNER("NOT_A_GROUP_OWNER", "그룹장이 아니기 때문에 권한이 없습니다.", 403),
     MEMBER_GROUP_NOT_FOUND("MEMBER_GROUP_NOT_FOUND", "아무 그룹에도 속해있지 않습니다.", 404),
+    IS_A_GROUP_OWNER("IS_A_GROUP_OWNER", "그룹장이기 때문에 그룹에서 나갈 수 없습니다.", 404),
 
     // Spring Basic Exceptions
     INVALID_INPUT_VALUE("INVALID_INPUT_VALUE", "유효하지 않은 입력값입니다.", 400),

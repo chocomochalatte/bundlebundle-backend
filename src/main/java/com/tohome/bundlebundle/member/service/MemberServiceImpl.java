@@ -3,6 +3,7 @@ package com.tohome.bundlebundle.member.service;
 import com.tohome.bundlebundle.common.ObjectValidator;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
+import com.tohome.bundlebundle.group.mapper.GroupMapper;
 import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.group.vo.GroupNicknameVO;
 import com.tohome.bundlebundle.member.mapper.MemberMapper;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
+    private final GroupMapper groupMapper;
 
     @Override
     @Transactional
@@ -54,10 +56,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public Integer getOutOfGroup(Integer memberId) {
-        checkMemberId(memberId);
+        findMemberById(memberId);
 
         Integer groupId = memberMapper.findGroupIdById(memberId);
         checkIfGroupExist(groupId);
+        checkIfIsGroupMember(memberId);
 
         Integer result = memberMapper.deleteGroupIdById(memberId);
         ObjectValidator.validateQueryResult(result);
@@ -87,6 +90,12 @@ public class MemberServiceImpl implements MemberService {
         if (groupId == null) {
             throw new BusinessException(ErrorCode.MEMBER_GROUP_NOT_FOUND);
         }
+    }
 
+    private void checkIfIsGroupMember(Integer memberId) {
+        Integer groupOwnerId = groupMapper.findGroupIdByGroupOwnerId(memberId);
+        if (groupOwnerId != null) {
+            throw new BusinessException(ErrorCode.IS_A_GROUP_OWNER);
+        }
     }
 }

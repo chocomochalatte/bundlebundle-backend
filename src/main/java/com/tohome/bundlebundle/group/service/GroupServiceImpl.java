@@ -90,8 +90,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     private void checkIfGroupIsEmpty(List<MemberVO> members) {
-        if (members != null) {
-            throw new BusinessException(ErrorCode.GROUP_ALREADY_EXIST);
+        if (members.size() > 1) {
+            throw new BusinessException(ErrorCode.GROUP_IS_NOT_EMPTY);
         }
     }
 
