@@ -16,5 +16,10 @@
             ]]>
         </selectKey>
     </insert>
+    
+    <select id="findGroupIdByGroupOwnerId" parameterType="Integer" resultType="Integer">
+        SELECT ID FROM "GROUP"
+        WHERE GROUP_OWNER_ID = #{memberId}
+    </select>
 
 </mapper>

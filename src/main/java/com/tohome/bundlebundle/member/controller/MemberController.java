@@ -1,6 +1,6 @@
 package com.tohome.bundlebundle.member.controller;
 
-import com.tohome.bundlebundle.TempTokenUtil;
+import com.tohome.bundlebundle.common.TempTokenUtil;
 import com.tohome.bundlebundle.group.vo.GroupIdVO;
 import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.member.service.MemberService;

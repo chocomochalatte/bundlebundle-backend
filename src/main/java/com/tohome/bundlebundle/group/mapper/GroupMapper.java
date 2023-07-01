@@ -9,4 +9,5 @@ public interface GroupMapper {
 
     Integer createGroup(GroupVO groupNicknameVO);
 
+    Integer findGroupIdByGroupOwnerId(Integer memberId);
 }

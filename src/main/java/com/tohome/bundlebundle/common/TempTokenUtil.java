@@ -1,4 +1,4 @@
-package com.tohome.bundlebundle;
+package com.tohome.bundlebundle.common;
 
 import org.springframework.stereotype.Component;
 

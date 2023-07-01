@@ -34,6 +34,13 @@ public class GroupServiceImpl implements GroupService {
         return createdGroupVO;
     }
 
+    @Override
+    public Integer findOwningGroupId(Integer memberId) {
+        Integer groupId = groupMapper.findGroupIdByGroupOwnerId(memberId);
+        validateNonNullObject(groupId);
+        return groupId;
+    }
+
     private GroupVO createGroup(Integer memberId) {
         GroupVO groupVO = new GroupVO(memberId);
         Integer result = groupMapper.createGroup(groupVO);
