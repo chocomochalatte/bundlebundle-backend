@@ -43,6 +43,9 @@ public class GroupServiceImpl implements GroupService {
 
     private GroupVO createGroup(Integer memberId) {
         GroupVO groupVO = new GroupVO(memberId);
+        Integer groupId = memberMapper.findGroupIdById(memberId);
+        checkIfGroupExists(groupId);
+
         Integer result = groupMapper.createGroup(groupVO);
         validateQueryResult(result);
         validateNonNullObject(groupVO.getId());
@@ -63,6 +66,12 @@ public class GroupServiceImpl implements GroupService {
     private void validateNonNullObject(Object object) {
         if (object == null) {
             throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
+        }
+    }
+
+    private void checkIfGroupExists(Integer groupId) {
+        if (groupId != null) {
+            throw new BusinessException(ErrorCode.GROUP_ALREADY_EXIST);
         }
     }
 
