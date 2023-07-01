@@ -5,6 +5,6 @@ import com.tohome.bundlebundle.group.vo.GroupVO;
 
 public interface GroupService {
 
-    GroupVO createGroup(Integer memberId, GroupNicknameVO groupId);
+    GroupVO createGroupCart(Integer memberId, GroupNicknameVO groupNicknameVO);
 
 }

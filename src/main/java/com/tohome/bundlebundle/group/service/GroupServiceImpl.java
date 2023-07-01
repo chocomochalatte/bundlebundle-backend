@@ -21,29 +21,42 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional
-    public GroupVO createGroup(Integer memberId, GroupNicknameVO groupNicknameVO) {
+    public GroupVO createGroupCart(Integer memberId, GroupNicknameVO groupNicknameVO) {
+
+        // 1. 그룹 생성
+        GroupVO createdGroupVO = createGroup(memberId);
+
+        // 2. 그룹 닉네임 업데이트
+        GroupMemberVO groupMemberVO = new GroupMemberVO(createdGroupVO, groupNicknameVO);
+        updateGroupNickname(groupMemberVO);
+
+        // 3. 생성된 그룹 정보 리턴
+        return createdGroupVO;
+    }
+
+    private GroupVO createGroup(Integer memberId) {
         GroupVO groupVO = new GroupVO(memberId);
-
-        Integer groupInsertingResult = groupMapper.createGroup(groupVO);
-        if (groupInsertingResult == 0) {
-            throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
-        }
-        Integer newGroupId = groupVO.getId();
-        if (newGroupId == null) {
-            throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
-        }
-
-        GroupMemberVO groupMemberVO = GroupMemberVO.builder()
-                                                   .groupId(newGroupId)
-                                                   .memberId(memberId)
-                                                   .groupNickname(groupNicknameVO.getGroupNickname())
-                                                   .build();
-
-        Integer groupNicknameResult = memberMapper.updateGroupNickname(groupMemberVO);
-        if (groupNicknameResult == 0) {
-            throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
-        }
-
+        Integer result = groupMapper.createGroup(groupVO);
+        validateQueryResult(result);
+        validateNonNullObject(groupVO.getId());
         return groupVO;
     }
+
+    private void updateGroupNickname(GroupMemberVO groupMemberVO) {
+        Integer result = memberMapper.updateGroupNickname(groupMemberVO);
+        validateQueryResult(result);
+    }
+
+    private void validateQueryResult(Integer result) {
+        if (result == 0) {
+            throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
+        }
+    }
+
+    private void validateNonNullObject(Object object) {
+        if (object == null) {
+            throw new BusinessException(ErrorCode.DB_QUERY_EXECUTION_ERROR);
+        }
+    }
+
 }
