@@ -5,46 +5,18 @@
 
 <mapper namespace="com.tohome.bundlebundle.product.mapper.ProductMapper">
 
-    <select id="findAllProductsByPopularity" resultType="ProductVO">
+    <select id="findAllProductsByOrderType" parameterType="OrderTypeVO" resultType="ProductVO">
         <![CDATA[
         SELECT * FROM PRODUCT
-        ORDER BY ID
-        ]]>
-        <!-- 수정 필요 -->
-    </select>
-
-    <select id="findAllProductsByLatest" resultType="ProductVO">
-        <![CDATA[
-        SELECT * FROM PRODUCT
-        ORDER BY CREATED_AT DESC
+        ORDER BY ${sortingField} ${sortingDirection}        /* ${} : 문자열 치환 */
         ]]>
     </select>
 
-    <select id="findAllProductsPriceAsc" resultType="ProductVO">
-        <![CDATA[
-        SELECT * FROM PRODUCT
-        ORDER BY PRICE ASC
-        ]]>
-    </select>
-
-    <select id="findAllProductsByPriceDesc" resultType="ProductVO">
-        <![CDATA[
-        SELECT * FROM PRODUCT
-        ORDER BY PRICE DESC
-        ]]>
-    </select>
-
-    <select id="findAllProductsByDiscount" resultType="ProductVO">
-        <![CDATA[
-        SELECT * FROM PRODUCT
-        ORDER BY ID
-        ]]>
-    </select>
 
     <select id="findProductById" resultType="ProductVO">
         <![CDATA[
         SELECT * FROM PRODUCT
-        WHERE ID = #{productId}
+        WHERE ID = #{productId}        /* #{} : reparedStatement 매개 변수로 처리됨 */
         ]]>
     </select>
 
