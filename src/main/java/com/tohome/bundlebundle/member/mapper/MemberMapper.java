@@ -17,4 +17,6 @@ public interface MemberMapper {
     Integer updateGroup(GroupMemberVO groupMemberVO);
 
     Integer updateGroupNickname(MemberGroupNicknameVO memberGroupNicknameVO);
+
+    Integer deleteGroupIdById(Integer memberId);
 }

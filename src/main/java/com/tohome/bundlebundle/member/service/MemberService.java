@@ -6,9 +6,11 @@ import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
 
 public interface MemberService {
 
+    MemberGroupNicknameVO updateGroupNickname(Integer memberId, GroupNicknameVO groupNicknameVO);
+
     Integer findPresentGroupId(Integer memberId);
 
     GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO);
 
-    MemberGroupNicknameVO updateGroupNickname(Integer memberId, GroupNicknameVO groupNicknameVO);
+    void getOutOfGroup(Integer memberId);
 }

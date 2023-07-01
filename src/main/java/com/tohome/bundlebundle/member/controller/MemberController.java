@@ -19,6 +19,13 @@ public class MemberController {
     private final MemberService memberService;
     private final TempTokenUtil tokenUtil;
 
+    @PatchMapping("/group")
+    public ResponseEntity<?> updateGroupNickname(@RequestHeader("Authorization") String accessToken, @RequestBody GroupNicknameVO groupNicknameVO) {
+        Integer memberId = tokenUtil.extractMemberId(accessToken);
+        MemberGroupNicknameVO response = memberService.updateGroupNickname(memberId, groupNicknameVO);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/group-check")
     public ResponseEntity<?> hasGroupCart(@RequestHeader("Authorization") String accessToken) {
         Integer memberId = tokenUtil.extractMemberId(accessToken);
@@ -33,11 +40,12 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/group")
-    public ResponseEntity<?> updateGroupNickname(@RequestHeader("Authorization") String accessToken, @RequestBody GroupNicknameVO groupNicknameVO) {
+    @DeleteMapping("/group-out")
+    public ResponseEntity<?> getOutOfGroup(@RequestHeader("Authorization") String accessToken) {
         Integer memberId = tokenUtil.extractMemberId(accessToken);
-        MemberGroupNicknameVO response = memberService.updateGroupNickname(memberId, groupNicknameVO);
-        return ResponseEntity.ok(response);
+        memberService.getOutOfGroup(memberId);
+        return ResponseEntity.ok(null);
+
     }
 
 }

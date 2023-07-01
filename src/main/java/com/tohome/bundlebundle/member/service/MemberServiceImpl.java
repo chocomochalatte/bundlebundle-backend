@@ -20,14 +20,23 @@ public class MemberServiceImpl implements MemberService {
     private final MemberMapper memberMapper;
 
     @Override
+    public MemberGroupNicknameVO updateGroupNickname(Integer memberId, GroupNicknameVO groupNicknameVO) {
+        checkMemberId(memberId);
+        MemberGroupNicknameVO memberGroupNicknameVO = new MemberGroupNicknameVO(memberId, groupNicknameVO);
+        Integer result =  memberMapper.updateGroupNickname(memberGroupNicknameVO);
+        ObjectValidator.validateQueryResult(result);
+        return memberGroupNicknameVO;
+    }
+
+    @Override
     public Integer findPresentGroupId(Integer memberId) {
-        validateMemberId(memberId);
+        checkMemberId(memberId);
         return memberMapper.findGroupIdById(memberId);
     }
 
     @Override
     public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
-        validateMemberId(memberId);
+        checkMemberId(memberId);
         groupMemberVO.addMemberId(memberId);
         Integer result = memberMapper.updateGroup(groupMemberVO);
         ObjectValidator.validateQueryResult(result);
@@ -35,12 +44,10 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberGroupNicknameVO updateGroupNickname(Integer memberId, GroupNicknameVO groupNicknameVO) {
-        validateMemberId(memberId);
-        MemberGroupNicknameVO memberGroupNicknameVO = new MemberGroupNicknameVO(memberId, groupNicknameVO);
-        Integer result =  memberMapper.updateGroupNickname(memberGroupNicknameVO);
+    public void getOutOfGroup(Integer memberId) {
+        checkMemberId(memberId);
+        Integer result = memberMapper.deleteGroupIdById(memberId);
         ObjectValidator.validateQueryResult(result);
-        return memberGroupNicknameVO;
     }
 
     private MemberVO findMemberById(Integer memberId) {
@@ -49,8 +56,9 @@ public class MemberServiceImpl implements MemberService {
         return memberVO;
     }
 
-    private void validateMemberId(Integer memberId) {
-        memberMapper.findMemberById(memberId)
+    private void checkMemberId(Integer memberId) {
+        log.info("memberID=" + memberId);
+        MemberVO memberVO = memberMapper.findMemberById(memberId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
     }
 }

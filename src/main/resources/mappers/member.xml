@@ -5,9 +5,9 @@
 
 <mapper namespace="com.tohome.bundlebundle.member.mapper.MemberMapper">
     
-    <select id="findMemberById" resultType="Integer">
+    <select id="findMemberById" parameterType="Integer" resultType="MemberVO">
         <![CDATA[
-        SELECT GROUP_ID FROM MEMBER
+        SELECT * FROM MEMBER
         WHERE ID = #{memberId}
         ]]>
     </select>
@@ -29,8 +29,15 @@
     <update id="updateGroupNickname" parameterType="MemberGroupNicknameVO">
         <![CDATA[
         UPDATE MEMBER SET GROUP_NICKNAME = #{groupNickname}
-        WHERE id = #{id}
+        WHERE id = #{memberId}
         ]]>
     </update>
+
+    <delete id="deleteGroupIdById" parameterType="Integer">
+        <![CDATA[
+        UPDATE MEMBER SET group_id = NULL
+        WHERE id = #{memberId}
+        ]]>
+    </delete>
 
 </mapper>
