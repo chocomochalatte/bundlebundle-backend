@@ -5,6 +5,8 @@
 
 <mapper namespace="com.tohome.bundlebundle.cart.mapper.MyCartMapper">
 	
+	<!-- 첫번째 로직 -->
+	
 	<select id="memberCheck" parameterType="Integer" resultType="Integer">
         <![CDATA[
          select count(id)
@@ -25,6 +27,16 @@
 		    b.price as product_price, a.product_cnt 
 		    from personal_cart a join product b on a.product_id=b.id
 		    where a.member_id=#{memberId}
+        ]]>
+    </select>
+    
+    <!-- 두번째 로직 -->
+    
+    <select id="productCheck" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+         select count(*)
+         from product
+         where id=#{productId}
         ]]>
     </select>
     

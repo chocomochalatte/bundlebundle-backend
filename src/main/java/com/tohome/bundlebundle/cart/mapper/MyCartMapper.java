@@ -21,6 +21,7 @@ public interface MyCartMapper {
 	void deleteItem(CartItemAddVO cartItemAddVO);
 
 	void changeProductCnt(ChangeCartVO changeCartVO);
+	int productCheck(int productId);
 
 	
 }

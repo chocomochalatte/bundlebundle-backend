@@ -49,16 +49,22 @@ public class MyCartServiceImpl implements CartService{
 	// 개인 장바구니에 상품 조회하기(중복확인)
 	@Override
 	public CheckVO checkItemCart(CartItemAddVO cartItemAddVO) {
-		CheckVO checkVO = new CheckVO();
-		CartProductVO result = mycartMapper.checkItemCart(cartItemAddVO);
-		if(result!=null) {
-			checkVO.setExists(true);
-			checkVO.setMessage("해당 상품이 장바구니에 이미 존재합니다.");
+		int productId = cartItemAddVO.getProductId();
+		int check = mycartMapper.productCheck(productId);
+		if(check>0) {
+			CheckVO checkVO = new CheckVO();
+			CartProductVO result = mycartMapper.checkItemCart(cartItemAddVO);
+			if(result!=null) {
+				checkVO.setExists(true);
+				checkVO.setMessage("해당 상품이 장바구니에 이미 존재합니다.");
+			}else {
+				checkVO.setExists(false);
+				checkVO.setMessage("해당 상품이 장바구니에 존재하지 않습니다.");
+			}
+			return checkVO;
 		}else {
-			checkVO.setExists(false);
-			checkVO.setMessage("해당 상품이 장바구니에 존재하지 않습니다.");
+			throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
 		}
-		return checkVO;
 	}
 	
 	// 개인 장바구니에 아이템 추가하는 곳
