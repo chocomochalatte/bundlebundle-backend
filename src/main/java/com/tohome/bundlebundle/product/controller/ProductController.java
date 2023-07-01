@@ -12,7 +12,7 @@ import java.util.List;
 
 @Log4j2
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductController {
 
