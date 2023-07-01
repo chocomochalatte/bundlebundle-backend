@@ -4,8 +4,15 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tohome.bundlebundle.member.mapper.MemberMapper">
+    
+    <select id="findMemberById">
+        <![CDATA[
+        SELECT GROUP_ID FROM MEMBER
+        WHERE ID = #{memberId}
+        ]]>
+    </select>
 
-    <select id="hasGroupCart" parameterType="Integer" resultType="Integer">
+    <select id="findGroupIdById" parameterType="Integer" resultType="Integer">
         <![CDATA[
         SELECT GROUP_ID FROM MEMBER
         WHERE ID = #{memberId}
