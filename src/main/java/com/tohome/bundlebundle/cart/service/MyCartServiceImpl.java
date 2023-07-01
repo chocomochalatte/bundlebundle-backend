@@ -36,7 +36,6 @@ public class MyCartServiceImpl implements CartService{
 		List<CartProductVO> result;
 		// 오류 체크하는 로직
 		int check = mycartMapper.memberCheck(memberId);
-		System.out.println("뭐가 뜰까" + check);
 		if(check>0) {
 			result = mycartMapper.showMyItem(memberId);
 			return result;
@@ -73,16 +72,24 @@ public class MyCartServiceImpl implements CartService{
 		TransactionStatus txStatus =
 				transactionManager.getTransaction(
 						new DefaultTransactionDefinition());
+		int productId = cartItemAddVO.getProductId();
+		int memberId = cartItemAddVO.getMemberId();
 		
-		try {
-			mycartMapper.addCartItem(cartItemAddVO);
-			transactionManager.commit(txStatus);
-			return 1;
-		} catch (Exception e) {
-			transactionManager.rollback(txStatus);
-			return 0;
+		int check = mycartMapper.productCheck(productId);
+		int memberCheck = mycartMapper.memberCheck(memberId);
+		if(check>0 && memberCheck>0) {
+			try {
+				mycartMapper.addCartItem(cartItemAddVO);
+				transactionManager.commit(txStatus);
+				return 1;
+			} catch (Exception e) {
+				transactionManager.rollback(txStatus);
+				return 0;
+			}
+		}else {
+			if(check==0) throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+			else throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
 		}
-		
 	}
 
 	// 개인 장바구니에서 상품 삭제하는 곳
@@ -94,20 +101,36 @@ public class MyCartServiceImpl implements CartService{
 				transactionManager.getTransaction(
 						new DefaultTransactionDefinition());
 		
-		try {
-			mycartMapper.deleteItem(cartItemAddVO);
-			transactionManager.commit(txStatus);
-			checkVO.setMessage("장바구니 담은 상품이 삭제되었습니다.");
-			checkVO.setExists(true);
-			return checkVO;
-		} catch (Exception e) {
-			checkVO.setMessage("장바구니 담은 상품이 삭제되지 않았습니다.");
-			checkVO.setExists(false);
-			transactionManager.rollback(txStatus);
-			return checkVO;
+		int productId = cartItemAddVO.getProductId();
+		int memberId = cartItemAddVO.getMemberId();
+		
+		int check = mycartMapper.productCheck(productId);
+		int memberCheck = mycartMapper.memberCheck(memberId);
+		
+		if(check>0 && memberCheck>0) {
+			try {
+				int deleteCheck = mycartMapper.deleteItem(cartItemAddVO);
+				if(deleteCheck>0) {
+					transactionManager.commit(txStatus);
+					checkVO.setMessage("장바구니 담은 상품이 삭제되었습니다.");
+					checkVO.setExists(true);
+					return checkVO;
+				}else {
+					checkVO.setMessage("장바구니 담은 상품을 삭제하지 않았습니다.(잘못 prdouctId를 보냈습니다.)");
+					checkVO.setExists(false);
+					transactionManager.rollback(txStatus);
+					return checkVO;
+				}
+			} catch (Exception e) {
+				checkVO.setMessage("장바구니 담은 상품이 삭제되지 않았습니다.");
+				checkVO.setExists(false);
+				transactionManager.rollback(txStatus);
+				return checkVO;
+			}
+		}else {
+			if(check==0) throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+			else throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
 		}
-		
-		
 	}
 
 	// 개인 장바구니에서 상품 수량 변경하는 곳
@@ -117,17 +140,30 @@ public class MyCartServiceImpl implements CartService{
 				transactionManager.getTransaction(
 						new DefaultTransactionDefinition());
 		
-		try {
-			mycartMapper.changeProductCnt(changeCartVO);
-			transactionManager.commit(txStatus);
-		}catch (Exception e) {
-			transactionManager.rollback(txStatus);
-		}
+		int productId = changeCartVO.getProductId();
+		int memberId = changeCartVO.getMemberId();
+		int productCnt = changeCartVO.getProductCnt();
 		
+		int check = mycartMapper.productCheck(productId);
+		int memberCheck = mycartMapper.memberCheck(memberId);
+		if(productCnt<0) throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+		
+		if(check>0 && memberCheck>0) {
+			try {
+				int updateCheck = mycartMapper.changeProductCnt(changeCartVO);
+				if(updateCheck>0) {
+					transactionManager.commit(txStatus);
+				}else {
+					throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+				}
+				
+			}catch (Exception e) {
+				transactionManager.rollback(txStatus);
+				throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+			}
+		}else {
+			if(check==0) throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+			else throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
+		}
 	}
-
-	
-
-	
-
 }

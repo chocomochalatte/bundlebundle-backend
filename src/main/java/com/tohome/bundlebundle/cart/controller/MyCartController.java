@@ -81,7 +81,6 @@ public class MyCartController {
 	@PatchMapping(value = "{memberId}/{productId}/{productCnt}")
 	public ResponseEntity<ChangeCartVO> changeProductCnt(@PathVariable("memberId") int memberId, 
 			@PathVariable("productId") int productId, @PathVariable("productCnt") int productCnt){
-		System.out.println("값 넘어왔나요?" + memberId + productCnt + productId);
 		ChangeCartVO changeCartVO = new ChangeCartVO();
 		changeCartVO.setMemberId(memberId);
 		changeCartVO.setProductId(productId);
