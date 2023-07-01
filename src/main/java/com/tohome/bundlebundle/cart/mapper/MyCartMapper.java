@@ -9,7 +9,10 @@ import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
 
 @Mapper
 public interface MyCartMapper {
+	
+	int memberCheck(int memberId);
 	List<CartProductVO> showMyItem(int memberId);
+	
 	
 	int addCartItem(CartItemAddVO cartItemAddVO);
 
@@ -18,4 +21,6 @@ public interface MyCartMapper {
 	void deleteItem(CartItemAddVO cartItemAddVO);
 
 	void changeProductCnt(ChangeCartVO changeCartVO);
+
+	
 }

@@ -29,24 +29,20 @@ public class MyCartServiceImpl implements CartService{
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 	
-	/*
-	 * //Transaction시작 TransactionStatus txStatus =
-	 * transactionManager.getTransaction( new DefaultTransactionDefinition()); try {
-	 * dao.reviewUpdate(reviewWriteVO); transactionManager.commit(txStatus); }catch
-	 * (Exception e) { transactionManager.rollback(txStatus); e.printStackTrace(); }
-	 */
 	
 	// 개인 장바구니 조회해서 출력하는 곳
 	@Override
 	public List<CartProductVO> showItem(int memberId) {
 		List<CartProductVO> result;
-		result = mycartMapper.showMyItem(memberId);
-		if(result==null) {
-			throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
-		}else {
+		// 오류 체크하는 로직
+		int check = mycartMapper.memberCheck(memberId);
+		System.out.println("뭐가 뜰까" + check);
+		if(check>0) {
+			result = mycartMapper.showMyItem(memberId);
 			return result;
+		}else {
+			throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
 		}
-		
 	}
 	
 	

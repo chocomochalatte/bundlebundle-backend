@@ -5,6 +5,14 @@
 
 <mapper namespace="com.tohome.bundlebundle.cart.mapper.MyCartMapper">
 	
+	<select id="memberCheck" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+         select count(id)
+         from member
+         where id=#{memberId}
+        ]]>
+    </select>
+	
 	<select id="showMyItem" parameterType="Integer" resultType="CartProductVO">
         <![CDATA[
          select
