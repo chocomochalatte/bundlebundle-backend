@@ -38,16 +38,27 @@ public class MemberServiceImpl implements MemberService {
     public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
         checkMemberId(memberId);
         groupMemberVO.addMemberId(memberId);
+
+        Integer groupId = memberMapper.findGroupIdById(memberId);
+        checkIfGroupNotExists(groupId);
+
         Integer result = memberMapper.updateGroup(groupMemberVO);
         ObjectValidator.validateQueryResult(result);
+
         return groupMemberVO;
     }
 
     @Override
-    public void getOutOfGroup(Integer memberId) {
+    public Integer getOutOfGroup(Integer memberId) {
         checkMemberId(memberId);
+
+        Integer groupId = memberMapper.findGroupIdById(memberId);
+        checkIfGroupExist(groupId);
+
         Integer result = memberMapper.deleteGroupIdById(memberId);
         ObjectValidator.validateQueryResult(result);
+
+        return groupId;
     }
 
     private MemberVO findMemberById(Integer memberId) {
@@ -60,5 +71,18 @@ public class MemberServiceImpl implements MemberService {
         log.info("memberID=" + memberId);
         MemberVO memberVO = memberMapper.findMemberById(memberId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+    }
+
+    private void checkIfGroupNotExists(Integer groupId) {
+        if (groupId != null) {
+            throw new BusinessException(ErrorCode.GROUP_ALREADY_EXIST);
+        }
+    }
+
+    private void checkIfGroupExist(Integer groupId) {
+        if (groupId == null) {
+            throw new BusinessException(ErrorCode.MEMBER_GROUP_NOT_FOUND);
+        }
+
     }
 }

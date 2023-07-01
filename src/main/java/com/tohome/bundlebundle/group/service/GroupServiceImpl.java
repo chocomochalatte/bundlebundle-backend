@@ -8,10 +8,13 @@ import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.group.vo.GroupNicknameVO;
 import com.tohome.bundlebundle.group.vo.GroupVO;
 import com.tohome.bundlebundle.member.mapper.MemberMapper;
+import com.tohome.bundlebundle.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Log4j2
 @Service
@@ -42,6 +45,28 @@ public class GroupServiceImpl implements GroupService {
         return groupId;
     }
 
+    @Override
+    @Transactional
+    public Integer deleteOwningGroup(Integer memberId) {
+        // 1. 해당 유저가 그룹장인 그룹ID 조회
+        Integer groupId = groupMapper.findGroupIdByGroupOwnerId(memberId);
+        checkIfMemberIsGroupOwner(groupId);
+
+        // 2. 해당 그룹에 다른 사용자들이 아직 남아있는지 조회
+        List<MemberVO> members = memberMapper.findAllByGroupId(groupId);
+        checkIfGroupIsEmpty(members);
+
+        // 3. 해당 유저의 group_id 필드 지우기
+        Integer memberResult = memberMapper.deleteGroupIdById(memberId);
+        ObjectValidator.validateQueryResult(memberResult);
+
+        // 4. 그룹 삭제하기
+        Integer groupResult = groupMapper.deleteGroupById(groupId);
+        ObjectValidator.validateQueryResult(groupResult);
+
+        return groupId;
+    }
+
     private GroupVO createGroup(Integer memberId) {
         GroupVO groupVO = new GroupVO(memberId);
         Integer groupId = memberMapper.findGroupIdById(memberId);
@@ -61,6 +86,18 @@ public class GroupServiceImpl implements GroupService {
     private void checkIfGroupExists(Integer groupId) {
         if (groupId != null) {
             throw new BusinessException(ErrorCode.GROUP_ALREADY_EXIST);
+        }
+    }
+
+    private void checkIfGroupIsEmpty(List<MemberVO> members) {
+        if (members != null) {
+            throw new BusinessException(ErrorCode.GROUP_ALREADY_EXIST);
+        }
+    }
+
+    private void checkIfMemberIsGroupOwner(Integer groupId) {
+        if (groupId == null) {
+            throw new BusinessException(ErrorCode.NOT_A_GROUP_OWNER);
         }
     }
 

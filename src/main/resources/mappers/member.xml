@@ -40,4 +40,11 @@
         ]]>
     </delete>
 
+    <select id="findAllByGroupId" parameterType="Integer" resultType="MemberVO">
+        <![CDATA[
+        SELECT * FROM MEMBER
+        WHERE ID = #{groupId}
+        ]]>
+    </select>
+
 </mapper>

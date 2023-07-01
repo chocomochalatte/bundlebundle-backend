@@ -22,4 +22,11 @@
         WHERE GROUP_OWNER_ID = #{memberId}
     </select>
 
+    <delete id="deleteGroupById" parameterType="Integer">
+        <![CDATA[
+        DELETE FROM "GROUP"
+        WHERE ID = #{groupId}
+        ]]>
+    </delete>
+
 </mapper>

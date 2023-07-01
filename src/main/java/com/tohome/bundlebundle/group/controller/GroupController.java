@@ -3,6 +3,7 @@ package com.tohome.bundlebundle.group.controller;
 import com.tohome.bundlebundle.common.SimpleDataResponseVO;
 import com.tohome.bundlebundle.common.TempTokenUtil;
 import com.tohome.bundlebundle.group.service.GroupService;
+import com.tohome.bundlebundle.group.vo.GroupIdVO;
 import com.tohome.bundlebundle.group.vo.GroupNicknameVO;
 import com.tohome.bundlebundle.group.vo.GroupVO;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,13 @@ public class GroupController {
         Integer groupId = groupService.findOwningGroupId(memberId);
         String url = INVITATION_URL + groupId;
         return ResponseEntity.ok(new SimpleDataResponseVO(url));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteGroupCart(@RequestHeader("Authorization") String accessToken) {
+        Integer memberId = tokenUtil.extractMemberId(accessToken);
+        Integer groupId = groupService.deleteOwningGroup(memberId);
+        return ResponseEntity.ok(new GroupIdVO(groupId));
     }
 
 }

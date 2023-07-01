@@ -12,5 +12,5 @@ public interface MemberService {
 
     GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO);
 
-    void getOutOfGroup(Integer memberId);
+    Integer getOutOfGroup(Integer memberId);
 }

@@ -5,6 +5,7 @@ import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
 import com.tohome.bundlebundle.member.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -19,4 +20,6 @@ public interface MemberMapper {
     Integer updateGroupNickname(MemberGroupNicknameVO memberGroupNicknameVO);
 
     Integer deleteGroupIdById(Integer memberId);
+
+    List<MemberVO> findAllByGroupId(Integer groupId);
 }

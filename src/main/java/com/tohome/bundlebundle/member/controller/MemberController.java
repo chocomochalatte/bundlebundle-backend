@@ -43,8 +43,8 @@ public class MemberController {
     @DeleteMapping("/group-out")
     public ResponseEntity<?> getOutOfGroup(@RequestHeader("Authorization") String accessToken) {
         Integer memberId = tokenUtil.extractMemberId(accessToken);
-        memberService.getOutOfGroup(memberId);
-        return ResponseEntity.ok(null);
+        Integer groupId = memberService.getOutOfGroup(memberId);
+        return ResponseEntity.ok(new GroupIdVO(groupId));
 
     }
 
