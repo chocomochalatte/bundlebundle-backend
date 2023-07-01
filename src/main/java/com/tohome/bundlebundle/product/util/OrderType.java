@@ -1,4 +1,4 @@
-package com.tohome.bundlebundle.util;
+package com.tohome.bundlebundle.product.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
