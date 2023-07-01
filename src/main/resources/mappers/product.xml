@@ -18,8 +18,10 @@
     <!--    #{} : reparedStatement 매개 변수로 처리됨   -->
     <select id="findProductById" resultType="ProductVO">
         <![CDATA[
-        SELECT * FROM PRODUCT
-        WHERE ID = #{id}
+        SELECT P.*, D.DISCOUNT_RATE FROM PRODUCT P
+            LEFT JOIN PRODUCT_DISCOUNT D
+            ON P.ID = D.PRODUCT_ID
+            WHERE ID = #{id}
         ]]>
     </select>
 
