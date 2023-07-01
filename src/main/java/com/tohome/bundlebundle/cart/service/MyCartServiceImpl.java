@@ -11,6 +11,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import com.tohome.bundlebundle.cart.mapper.MyCartMapper;
 import com.tohome.bundlebundle.cart.vo.CartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.CartProductVO;
+import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.CheckVO;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
@@ -104,6 +105,22 @@ public class MyCartServiceImpl implements CartService{
 			return checkVO;
 		}
 		
+		
+	}
+
+	// 개인 장바구니에서 상품 수량 변경하는 곳
+	@Override
+	public void changeProductCnt(ChangeCartVO changeCartVO) {
+		TransactionStatus txStatus =
+				transactionManager.getTransaction(
+						new DefaultTransactionDefinition());
+		
+		try {
+			mycartMapper.changeProductCnt(changeCartVO);
+			transactionManager.commit(txStatus);
+		}catch (Exception e) {
+			transactionManager.rollback(txStatus);
+		}
 		
 	}
 

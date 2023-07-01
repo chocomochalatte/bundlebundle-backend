@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.tohome.bundlebundle.cart.vo.CartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.CartProductVO;
+import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
 
 @Mapper
 public interface MyCartMapper {
@@ -15,4 +16,6 @@ public interface MyCartMapper {
 	CartProductVO checkItemCart(CartItemAddVO cartItemAddVO);
 
 	void deleteItem(CartItemAddVO cartItemAddVO);
+
+	void changeProductCnt(ChangeCartVO changeCartVO);
 }

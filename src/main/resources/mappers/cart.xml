@@ -43,6 +43,12 @@
     	]]>
     </delete>
     
-    
+    <update id="changeProductCnt" parameterType="changeCartVO">
+    	<![CDATA[
+    		UPDATE PERSONAL_CART
+			SET PRODUCT_CNT = #{productCnt}
+			WHERE member_id= #{memberId} and product_id=#{productId}   		
+    	]]>
+    </update>
 	
 </mapper>

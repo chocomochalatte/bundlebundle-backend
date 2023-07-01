@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.tohome.bundlebundle.cart.service.CartService;
 import com.tohome.bundlebundle.cart.vo.CartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.CartProductVO;
 import com.tohome.bundlebundle.cart.vo.CartVO;
+import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.CheckVO;
 
 import lombok.RequiredArgsConstructor;
@@ -73,12 +75,24 @@ public class MyCartController {
 	    CartItemAddVO cartItemAddVO = new CartItemAddVO();
 	    cartItemAddVO.setMemberId(memberId);
 	    cartItemAddVO.setProductId(productId);
-		
 	    CheckVO result = service.deleteCartItem(cartItemAddVO);
-	    
-	    
 		return new ResponseEntity<CheckVO>(result, HttpStatus.OK);
 	}
 	
 	// 개인 장바구니에서 상품 수량 변경하기
+	@PatchMapping(value = "{memberId}/{productId}/{productCnt}")
+	public ResponseEntity<ChangeCartVO> changeProductCnt(@PathVariable("memberId") int memberId, 
+			@PathVariable("productId") int productId, @PathVariable("productCnt") int productCnt){
+		System.out.println("값 넘어왔나요?" + memberId + productCnt + productId);
+		ChangeCartVO changeCartVO = new ChangeCartVO();
+		changeCartVO.setMemberId(memberId);
+		changeCartVO.setProductId(productId);
+		changeCartVO.setProductCnt(productCnt);
+		
+		service.changeProductCnt(changeCartVO);
+		
+		ChangeCartVO result = changeCartVO;
+		
+		return new ResponseEntity<ChangeCartVO>(result, HttpStatus.OK);
+	}
 }
