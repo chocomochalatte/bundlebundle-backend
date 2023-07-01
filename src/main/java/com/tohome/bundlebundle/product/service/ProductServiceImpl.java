@@ -21,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductVO> showProducts(String sortType) {
         OrderTypeVO orderTypeVO = OrderTypeConverter.findOrderType(sortType);
+        log.info(orderTypeVO.toString());
         List<ProductVO> result = productMapper.findAllProductsByOrderType(orderTypeVO);
         return result;
     }
