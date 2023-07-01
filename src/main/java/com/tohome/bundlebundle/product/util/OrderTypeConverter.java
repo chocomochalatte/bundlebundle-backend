@@ -10,10 +10,10 @@ public class OrderTypeConverter {
 
     public static OrderTypeVO findOrderType(String requestParam) {
         return Arrays.stream(OrderType.values())
-                .filter(orderType -> orderType.getRequestParam().equals(requestParam))
-                .findFirst()
-                .map(orderType -> new OrderTypeVO(orderType.getSortingField(), orderType.getSortingDirection()))
-                .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_ORDER_TYPE));
+                     .filter(orderType -> orderType.getRequestParam().equals(requestParam))
+                     .findFirst()
+                     .map(orderType -> new OrderTypeVO(orderType.getSortingField(), orderType.getSortingDirection()))
+                     .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_ORDER_TYPE));
     }
 
 }
