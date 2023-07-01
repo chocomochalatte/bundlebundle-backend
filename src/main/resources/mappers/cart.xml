@@ -111,7 +111,22 @@
         ]]>
     </select>
     
+    <!--  그룹 장바구니에 상품 중복 조회 -->
+    <select id="groupCheckItemCart" parameterType="groupCartItemAddVO" resultType="Int">
+        <![CDATA[
+         	select count(*) from group_member_cart 
+         	where group_id=#{groupId} and member_id=#{memberId} and product_id=#{productId}
+        ]]>
+    </select>
     
+    
+    <!--  그룹 장바구니에 상품 추가하기 -->
+    <insert id="addGroupCartItem" parameterType="groupCartItemAddVO" >
+    	<![CDATA[
+    		INSERT INTO GROUP_MEMBER_CART (GROUP_ID, PRODUCT_ID, MEMBER_ID)
+			VALUES (#{groupId}, #{productId}, #{memberId})
+    	]]>
+    </insert>
     
     
 </mapper>

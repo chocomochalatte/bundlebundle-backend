@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.tohome.bundlebundle.cart.vo.CartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.CartProductVO;
 import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
+import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartProductVO;
 import com.tohome.bundlebundle.cart.vo.GroupSelectVO;
 
@@ -32,6 +33,11 @@ public interface MyCartMapper {
 	String getnickName(int memberId);
 	List<GroupCartProductVO> showGroupItem(int memberId);
 	
+	
+	int groupCheckItemCart(GroupCartItemAddVO groupCartItemAddVO);
+	
+	
+	void addGroupCartItem(GroupCartItemAddVO groupCartItemAddVO);
 	
 	
 }

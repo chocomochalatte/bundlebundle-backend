@@ -6,8 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.tohome.bundlebundle.cart.mapper.MyCartMapper;
+import com.tohome.bundlebundle.cart.vo.CheckVO;
+import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartProductVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupVO;
@@ -52,4 +56,69 @@ public class GroupCartServiceImpl implements GroupCartService{
 			throw new BusinessException(ErrorCode.GROUP_NOT_FOUND);
 		}
 	}
+
+	
+	// 그룹 장바구니에 상품 조회하기 (추가 전에 중복 확인)
+	@Override
+	public CheckVO groupCheckItemCart(GroupCartItemAddVO groupCartItemAddVO) {
+		int productId = groupCartItemAddVO.getProductId();
+		int memberId = groupCartItemAddVO.getMemberId();
+		int groupId = groupCartItemAddVO.getGroupId();
+		
+		int productCheck = mycartMapper.productCheck(productId);
+		int memberCheck = mycartMapper.memberCheck(memberId);
+		int groupCheck = mycartMapper.groupCheck(groupId);
+		
+		if(productCheck>0 && memberCheck>0 && groupCheck>0) {
+			CheckVO checkVO = new CheckVO();
+			int result = mycartMapper.groupCheckItemCart(groupCartItemAddVO);
+			if(result>0) {
+				checkVO.setExists(true);
+				checkVO.setMessage("해당 상품이 그룹 내 장바구니에 존재합니다.");
+			}else {
+				checkVO.setExists(false);
+				checkVO.setMessage("해당 상품이 그룹 내 장바구니에 존재하지 않습니다.");
+			}
+			return checkVO;
+		}else {
+			if(productCheck==0) throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+			else if(memberCheck==0) throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
+			else throw new BusinessException(ErrorCode.GROUP_NOT_FOUND);
+		}
+	
+	}
+	
+	
+	
+	//그룹 장바구니에 상품 추가하기
+	@Override
+	public void addGroupCartItem(GroupCartItemAddVO groupCartItemAddVO) {
+		TransactionStatus txStatus =
+				transactionManager.getTransaction(
+						new DefaultTransactionDefinition());
+		int productId = groupCartItemAddVO.getProductId();
+		int memberId = groupCartItemAddVO.getMemberId();
+		int groupId = groupCartItemAddVO.getGroupId();
+		
+		int productCheck = mycartMapper.productCheck(productId);
+		int memberCheck = mycartMapper.memberCheck(memberId);
+		int groupCheck = mycartMapper.groupCheck(groupId);
+		
+		if(productCheck>0 && memberCheck>0 && groupCheck>0) {
+			try {
+				mycartMapper.addGroupCartItem(groupCartItemAddVO);
+				transactionManager.commit(txStatus);
+			} catch (Exception e) {
+				transactionManager.rollback(txStatus);
+			}
+		}else {
+			if(productCheck==0) throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+			else if(memberCheck==0) throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
+			else throw new BusinessException(ErrorCode.GROUP_NOT_FOUND);
+		}
+	}
+
+
+
+	
 }
