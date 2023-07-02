@@ -18,6 +18,7 @@
 	<select id="showMyItem" parameterType="Integer" resultType="CartProductVO">
         <![CDATA[
          SELECT
+         		a.member_id,
 			    a.id as cart_id,
 			    b.id as product_id,
 			    b.origin as product_origin,
