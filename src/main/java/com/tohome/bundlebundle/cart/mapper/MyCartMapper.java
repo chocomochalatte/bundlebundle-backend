@@ -8,6 +8,7 @@ import com.tohome.bundlebundle.cart.vo.CartProductVO;
 import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartProductVO;
+import com.tohome.bundlebundle.cart.vo.GroupChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupSelectVO;
 
 @Mapper
@@ -43,6 +44,7 @@ public interface MyCartMapper {
 	
 	// 그룹 장바구니에서 상품 삭제하기
 	int deleteGroupCartItem(GroupCartItemAddVO groupCartItemAddVO);
+	int changeGroupProductCnt(GroupChangeCartVO groupChangeCartVO);
 	
 	
 }

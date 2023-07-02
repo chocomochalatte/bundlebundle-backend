@@ -14,6 +14,7 @@ import com.tohome.bundlebundle.cart.vo.CheckVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartProductVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartVO;
+import com.tohome.bundlebundle.cart.vo.GroupChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupVO;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
@@ -163,7 +164,42 @@ public class GroupCartServiceImpl implements GroupCartService{
 		}
 	}
 
-
-
 	
+	
+	// 그룹 장바구니에서 상품 수량 변경하기
+	@Override
+	public void changeGroupProductCnt(GroupChangeCartVO groupChangeCartVO) {
+		TransactionStatus txStatus =
+				transactionManager.getTransaction(
+						new DefaultTransactionDefinition());
+		
+		int productId = groupChangeCartVO.getProductId();
+		int memberId = groupChangeCartVO.getMemberId();
+		int groupId = groupChangeCartVO.getGroupId();
+		int productCnt = groupChangeCartVO.getProductCnt();
+		if(productCnt<0) throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+		
+		int productCheck = mycartMapper.productCheck(productId);
+		int memberCheck = mycartMapper.memberCheck(memberId);
+		int groupCheck = mycartMapper.groupCheck(groupId);
+		
+		if(productCheck>0 && memberCheck>0 && groupCheck>0) {
+			try {
+				int updateCheck = mycartMapper.changeGroupProductCnt(groupChangeCartVO);
+				if(updateCheck>0) {
+					transactionManager.commit(txStatus);
+				}else {
+					throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+				}
+			}catch (Exception e) {
+				transactionManager.rollback(txStatus);
+				throw new BusinessException(ErrorCode.INVALID_INPUT_VALUE);
+			}
+		}else {
+			if(productCheck==0) throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+			else if(memberCheck==0) throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
+			else throw new BusinessException(ErrorCode.GROUP_NOT_FOUND);
+		}
+		
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tohome.bundlebundle.cart.service.GroupCartService;
+import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.CheckVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartVO;
+import com.tohome.bundlebundle.cart.vo.GroupChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupVO;
 
 import lombok.RequiredArgsConstructor;
@@ -73,4 +76,19 @@ public class GroupCartController {
 		
 		
 		// 그룹 장바구니에서 상품 수량 변경하기
+		@PatchMapping(value = "{memberId}/{productId}/{groupId}/{productCnt}")
+		public ResponseEntity<GroupChangeCartVO> changeGroupProductCnt(@PathVariable("memberId") int memberId, 
+			@PathVariable("productId") int productId, @PathVariable("groupId") int groupId ,@PathVariable("productCnt") int productCnt){
+			GroupChangeCartVO groupChangeCartVO = new GroupChangeCartVO();
+			groupChangeCartVO.setMemberId(memberId);
+			groupChangeCartVO.setProductId(productId);
+			groupChangeCartVO.setGroupId(groupId);
+			groupChangeCartVO.setProductCnt(productCnt);
+			
+			service.changeGroupProductCnt(groupChangeCartVO);
+			
+			GroupChangeCartVO result = groupChangeCartVO;
+			
+			return new ResponseEntity<GroupChangeCartVO>(result, HttpStatus.OK);
+		}
 }

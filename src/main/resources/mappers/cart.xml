@@ -135,4 +135,13 @@
     		where member_id=#{memberId} and product_id=#{productId} and group_id=#{groupId} 
     	]]>
     </delete>
+    
+    <!-- 그룹 장바구니에서 상품 수량 변경하기 -->
+    <update id="changeGroupProductCnt" parameterType="groupChangeCartVO">
+    	<![CDATA[
+    		UPDATE GROUP_MEMBER_CART
+			SET PRODUCT_CNT = #{productCnt}
+			WHERE member_id= #{memberId} and product_id=#{productId} and group_id=#{groupId}  		
+    	]]>
+    </update>
 </mapper>

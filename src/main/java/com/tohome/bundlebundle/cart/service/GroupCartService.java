@@ -5,6 +5,7 @@ import java.util.List;
 import com.tohome.bundlebundle.cart.vo.CheckVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartVO;
+import com.tohome.bundlebundle.cart.vo.GroupChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupVO;
 
 public interface GroupCartService {
@@ -16,5 +17,7 @@ public interface GroupCartService {
 	CheckVO groupCheckItemCart(GroupCartItemAddVO groupCartItemAddVO);
 
 	CheckVO deleteGroupCartItem(GroupCartItemAddVO groupCartItemAddVO);
+
+	void changeGroupProductCnt(GroupChangeCartVO groupChangeCartVO);
 
 }
