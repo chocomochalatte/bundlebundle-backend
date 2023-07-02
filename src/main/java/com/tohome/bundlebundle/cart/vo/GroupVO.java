@@ -3,14 +3,15 @@ package com.tohome.bundlebundle.cart.vo;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+
 import lombok.NoArgsConstructor;
 
+import lombok.Data;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CartVO {
-	private int cartCnt;
-	private List<CartProductVO> cartProducts;
+@AllArgsConstructor
+public class GroupVO {
+	private int totalCnt;
+	private List<GroupCartVO> groupCart;
 }

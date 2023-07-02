@@ -10,9 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class CartProductVO {
-	private int memberId;
 	private int cartId;
-    private int productId;
+	private int productId;
     private String productOrigin;
     private String productBrand;
     private String productName;
