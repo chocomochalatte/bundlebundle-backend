@@ -34,10 +34,15 @@ public interface MyCartMapper {
 	List<GroupCartProductVO> showGroupItem(int memberId);
 	
 	
+	// 그룹 장바구니에 상품 조회하기 (추가 전에 중복 확인)
 	int groupCheckItemCart(GroupCartItemAddVO groupCartItemAddVO);
 	
-	
+	//그룹 장바구니에 상품 추가하기
 	void addGroupCartItem(GroupCartItemAddVO groupCartItemAddVO);
+	
+	
+	// 그룹 장바구니에서 상품 삭제하기
+	int deleteGroupCartItem(GroupCartItemAddVO groupCartItemAddVO);
 	
 	
 }

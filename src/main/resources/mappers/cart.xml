@@ -128,5 +128,11 @@
     	]]>
     </insert>
     
-    
+    <!--  그룹 장바구니에서 상품 삭제하기-->
+    <delete id="deleteGroupCartItem" parameterType="groupCartItemAddVO">
+    	<![CDATA[
+    		delete from group_member_cart 
+    		where member_id=#{memberId} and product_id=#{productId} and group_id=#{groupId} 
+    	]]>
+    </delete>
 </mapper>

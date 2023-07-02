@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,4 +58,19 @@ public class GroupCartController {
 			service.addGroupCartItem(groupCartItemAddVO);
 			return new ResponseEntity<GroupCartItemAddVO>(groupCartItemAddVO, HttpStatus.OK);
 		}
+		
+		//그룹 장바구니에서 상품 삭제하기
+		@DeleteMapping(value = "{memberId}/{productId}/{groupId}")
+		public ResponseEntity<CheckVO> deleteGroupCart(@PathVariable("memberId") int memberId, @PathVariable("productId") int productId,
+				@PathVariable("groupId") int groupId){
+			GroupCartItemAddVO groupCartItemAddVO = new GroupCartItemAddVO();
+			groupCartItemAddVO.setMemberId(memberId);
+			groupCartItemAddVO.setProductId(productId);
+			groupCartItemAddVO.setGroupId(groupId);
+			CheckVO result = service.deleteGroupCartItem(groupCartItemAddVO);
+			return new ResponseEntity<CheckVO>(result, HttpStatus.OK);
+		}
+		
+		
+		// 그룹 장바구니에서 상품 수량 변경하기
 }

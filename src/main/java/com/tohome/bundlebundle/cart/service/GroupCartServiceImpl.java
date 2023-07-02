@@ -118,6 +118,51 @@ public class GroupCartServiceImpl implements GroupCartService{
 		}
 	}
 
+	
+	// 그룹 장바구니에서 상품 삭제하기
+	@Override
+	public CheckVO deleteGroupCartItem(GroupCartItemAddVO groupCartItemAddVO) {
+		CheckVO checkVO = new CheckVO();
+		
+		TransactionStatus txStatus =
+				transactionManager.getTransaction(
+						new DefaultTransactionDefinition());
+		
+		int productId = groupCartItemAddVO.getProductId();
+		int memberId = groupCartItemAddVO.getMemberId();
+		int groupId = groupCartItemAddVO.getGroupId();
+		
+		int productCheck = mycartMapper.productCheck(productId);
+		int memberCheck = mycartMapper.memberCheck(memberId);
+		int groupCheck = mycartMapper.groupCheck(groupId);
+		if(productCheck>0 && memberCheck>0 && groupCheck>0) {
+			try {
+				int deleteCheck = mycartMapper.deleteGroupCartItem(groupCartItemAddVO);
+				if(deleteCheck>0) {
+					transactionManager.commit(txStatus);
+					checkVO.setMessage("장바구니 담은 상품이 삭제되었습니다.");
+					checkVO.setExists(true);
+					return checkVO;
+				}else {
+					checkVO.setMessage("장바구니 담은 상품을 삭제하지 못했습니다.(잘못 prdouctId를 보냈습니다.)");
+					checkVO.setExists(false);
+					transactionManager.rollback(txStatus);
+					return checkVO;
+				}
+			} catch (Exception e) {
+				checkVO.setMessage("장바구니 담은 상품이 삭제되지 않았습니다.(오류가 발생했습니다.)");
+				checkVO.setExists(false);
+				transactionManager.rollback(txStatus);
+				e.printStackTrace();
+				return checkVO;
+			}
+		}else {
+			if(productCheck==0) throw new BusinessException(ErrorCode.PRODUCT_NOT_FOUND);
+			else if(memberCheck==0) throw new BusinessException(ErrorCode.MEMBER_NOT_FOUND);
+			else throw new BusinessException(ErrorCode.GROUP_NOT_FOUND);
+		}
+	}
+
 
 
 	

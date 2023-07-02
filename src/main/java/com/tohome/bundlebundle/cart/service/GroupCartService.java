@@ -15,4 +15,6 @@ public interface GroupCartService {
 
 	CheckVO groupCheckItemCart(GroupCartItemAddVO groupCartItemAddVO);
 
+	CheckVO deleteGroupCartItem(GroupCartItemAddVO groupCartItemAddVO);
+
 }
