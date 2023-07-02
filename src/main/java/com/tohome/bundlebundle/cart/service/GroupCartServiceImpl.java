@@ -15,7 +15,6 @@ import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartProductVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupChangeCartVO;
-import com.tohome.bundlebundle.cart.vo.GroupVO;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
 

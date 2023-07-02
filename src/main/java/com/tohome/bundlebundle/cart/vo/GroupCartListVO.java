@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupVO {
+public class GroupCartListVO {
 	private int totalCnt;
 	private List<GroupCartVO> groupCart;
 }
