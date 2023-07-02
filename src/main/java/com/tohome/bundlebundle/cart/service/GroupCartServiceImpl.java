@@ -9,7 +9,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import com.tohome.bundlebundle.cart.mapper.MyCartMapper;
+import com.tohome.bundlebundle.cart.mapper.CartMapper;
 import com.tohome.bundlebundle.cart.vo.CheckVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartItemAddVO;
 import com.tohome.bundlebundle.cart.vo.GroupCartProductVO;
@@ -27,7 +27,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class GroupCartServiceImpl implements GroupCartService{
 	
-	private final MyCartMapper mycartMapper;
+	private final CartMapper mycartMapper;
 	
 	@Autowired
 	private PlatformTransactionManager transactionManager;

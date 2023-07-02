@@ -12,7 +12,7 @@ import com.tohome.bundlebundle.cart.vo.GroupChangeCartVO;
 import com.tohome.bundlebundle.cart.vo.GroupSelectVO;
 
 @Mapper
-public interface MyCartMapper {
+public interface CartMapper {
 	
 	int memberCheck(int memberId);
 	List<CartProductVO> showMyItem(int memberId);
