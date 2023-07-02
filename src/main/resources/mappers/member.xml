@@ -3,6 +3,48 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="member">
+<mapper namespace="com.tohome.bundlebundle.member.mapper.MemberMapper">
+    
+    <select id="findMemberById" parameterType="Integer" resultType="MemberVO">
+        <![CDATA[
+        SELECT * FROM MEMBER
+        WHERE ID = #{memberId}
+        ]]>
+    </select>
+
+    <select id="findGroupIdById" parameterType="Integer" resultType="Integer">
+        <![CDATA[
+        SELECT GROUP_ID FROM MEMBER
+        WHERE ID = #{memberId}
+        ]]>
+    </select>
+
+    <update id="updateGroup" parameterType="GroupMemberVO">
+        <![CDATA[
+        UPDATE MEMBER SET GROUP_NICKNAME = #{groupNickname}, GROUP_ID = #{groupId}
+        WHERE id = #{memberId}
+        ]]>
+    </update>
+
+    <update id="updateGroupNickname" parameterType="MemberGroupNicknameVO">
+        <![CDATA[
+        UPDATE MEMBER SET GROUP_NICKNAME = #{groupNickname}
+        WHERE id = #{memberId}
+        ]]>
+    </update>
+
+    <delete id="deleteGroupIdById" parameterType="Integer">
+        <![CDATA[
+        UPDATE MEMBER SET group_id = NULL
+        WHERE id = #{memberId}
+        ]]>
+    </delete>
+
+    <select id="findAllByGroupId" parameterType="Integer" resultType="MemberVO">
+        <![CDATA[
+        SELECT * FROM MEMBER
+        WHERE ID = #{groupId}
+        ]]>
+    </select>
 
 </mapper>

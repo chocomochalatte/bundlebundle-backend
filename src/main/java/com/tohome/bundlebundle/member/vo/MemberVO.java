@@ -1,5 +1,6 @@
 package com.tohome.bundlebundle.member.vo;
 
+<<<<<<< HEAD
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,3 +20,22 @@ public class MemberVO {
     private String groupNickname;
     private Integer groupId;
 }
+=======
+
+import lombok.Getter;
+
+import java.sql.Timestamp;
+
+@Getter
+public class MemberVO {
+    private Integer id;
+    private String username;
+    private String password;
+    private String email;
+    private String address;
+    private String phoneNumber;
+    private Timestamp created_at;
+    private String groupNickname;
+    private Integer groupId;
+}
+>>>>>>> 6ce2b68b3ac099e5d167d8276da0dc6084a014b1

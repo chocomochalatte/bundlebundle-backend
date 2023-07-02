@@ -4,10 +4,24 @@ import com.tohome.bundlebundle.member.vo.MemberVO;
 import com.tohome.bundlebundle.member.vo.OauthTokenVO;
 import org.springframework.lang.NonNull;
 import org.apache.ibatis.annotations.Mapper;
+import com.tohome.bundlebundle.group.vo.GroupMemberVO;
+import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
+import java.util.List;
+import java.util.Optional;
 
 
 @Mapper
 public interface MemberMapper {
-    Boolean insertOneMember(@NonNull MemberVO member) throws Exception;
-    OauthTokenVO selectKakaoOneMemberByToken(@NonNull OauthTokenVO token) throws Exception;
+
+    Optional<MemberVO> findMemberById(Integer memberId);
+
+    Integer findGroupIdById(Integer memberId);
+
+    Integer updateGroup(GroupMemberVO groupMemberVO);
+
+    Integer updateGroupNickname(MemberGroupNicknameVO memberGroupNicknameVO);
+
+    Integer deleteGroupIdById(Integer memberId);
+
+    List<MemberVO> findAllByGroupId(Integer groupId);
 }

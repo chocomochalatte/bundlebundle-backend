@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartVO {
+public class GroupCartVO {
+	private int memberId;
 	private int cartCnt;
-	private List<CartProductVO> cartProducts;
+	private String groupNickname;
+	private List<GroupCartProductVO> cartProducts;
 }
