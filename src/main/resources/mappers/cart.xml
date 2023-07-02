@@ -17,16 +17,22 @@
 	
 	<select id="showMyItem" parameterType="Integer" resultType="CartProductVO">
         <![CDATA[
-         select
-    		a.id as cart_id,
-    		b.id as product_id,
-    		b.origin as product_origin,
-		    b.brand as product_brand,
-		    b.name as product_name,
-		    b.thumbnail_img as product_thumbnail_img, 
-		    b.price as product_price, a.product_cnt 
-		    from personal_cart a join product b on a.product_id=b.id
-		    where a.member_id=#{memberId}
+         SELECT
+			    a.id as cart_id,
+			    b.id as product_id,
+			    b.origin as product_origin,
+			    b.brand as product_brand,
+			    b.name as product_name,
+			    b.thumbnail_img as product_thumbnail_img, 
+			    b.price as product_price,
+			    a.product_cnt,
+			    c.discount_rate
+		FROM
+		    personal_cart a
+		JOIN
+		    product b ON a.product_id = b.id
+		JOIN product_discount c on c.product_id = b.id
+		where a.member_id=#{memberId}
         ]]>
     </select>
     

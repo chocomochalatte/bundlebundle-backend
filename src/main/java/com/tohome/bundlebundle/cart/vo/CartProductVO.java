@@ -18,4 +18,5 @@ public class CartProductVO {
     private String productThumbnailImg;
     private int productPrice;
     private int productCnt;
+    private int discountRate;
 }
