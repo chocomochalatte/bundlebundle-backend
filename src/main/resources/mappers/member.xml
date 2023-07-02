@@ -47,4 +47,27 @@
         ]]>
     </select>
 
+    <select id="findUserByEmail" parameterType="String" resultType="MemberVO">
+        <![CDATA[
+        SELECT * FROM MEMBER
+        WHERE EMAIL = #{email}
+        ]]>
+    </select>
+
+    <insert id="insertUser" parameterType="MemberVO">
+        <![CDATA[
+    INSERT INTO MEMBER (EMAIL, USERNAME)
+    VALUES (#{email}, #{username})
+    ]]>
+    </insert>
+
+    <update id="updateUser" parameterType="MemberVO">
+        <![CDATA[
+    UPDATE MEMBER
+    SET EMAIL = #{email}, USERNAME = #{username}
+    WHERE EMAIL = #{email}
+    ]]>
+    </update>
+
+
 </mapper>

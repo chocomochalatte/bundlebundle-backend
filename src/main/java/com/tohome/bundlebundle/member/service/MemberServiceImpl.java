@@ -11,6 +11,7 @@ import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
 import com.tohome.bundlebundle.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +73,22 @@ public class MemberServiceImpl implements MemberService {
         MemberVO memberVO = memberMapper.findMemberById(memberId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
         return memberVO;
+    }
+
+    public MemberVO findUserByEmail(String email) {
+        MemberVO memberVO = memberMapper.findUserByEmail(email)
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
+        return memberVO;
+    }
+
+    public Boolean insertUser(@NonNull MemberVO member) throws Exception {
+        Boolean result = memberMapper.insertUser(member);
+        return result;
+    }
+
+    public MemberVO updateUser(@NonNull MemberVO member) throws Exception {
+        Integer result = memberMapper.updateUser(member);
+        return member;
     }
 
     private void checkMemberId(Integer memberId) {

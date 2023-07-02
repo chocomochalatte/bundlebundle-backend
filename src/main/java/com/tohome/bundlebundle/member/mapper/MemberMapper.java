@@ -1,7 +1,6 @@
 package com.tohome.bundlebundle.member.mapper;
 
 import com.tohome.bundlebundle.member.vo.MemberVO;
-import com.tohome.bundlebundle.member.vo.OauthTokenVO;
 import org.springframework.lang.NonNull;
 import org.apache.ibatis.annotations.Mapper;
 import com.tohome.bundlebundle.group.vo.GroupMemberVO;
@@ -15,6 +14,8 @@ public interface MemberMapper {
 
     Optional<MemberVO> findMemberById(Integer memberId);
 
+    Optional<MemberVO> findUserByEmail(String email);
+
     Integer findGroupIdById(Integer memberId);
 
     Integer updateGroup(GroupMemberVO groupMemberVO);
@@ -24,4 +25,8 @@ public interface MemberMapper {
     Integer deleteGroupIdById(Integer memberId);
 
     List<MemberVO> findAllByGroupId(Integer groupId);
+
+    Boolean insertUser(@NonNull MemberVO member) throws Exception;
+
+    Integer updateUser(@NonNull MemberVO member) throws Exception;
 }

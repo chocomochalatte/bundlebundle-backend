@@ -1,7 +1,6 @@
 package com.tohome.bundlebundle.member.service;
 
 import com.tohome.bundlebundle.member.vo.MemberVO;
-import com.tohome.bundlebundle.member.vo.OauthTokenVO;
 
 public interface OauthService {
 
@@ -15,5 +14,6 @@ public interface OauthService {
      * @author : noino
      * @see : MemberService#loginOauthService(OauthTokenVO tokenVO)) 토큰을 통해 로그인을 진행한다
      */
-    MemberVO loginOauthService (OauthTokenVO tokenVO);
+    MemberVO loginOauthService (String tokenVO) throws Exception;
 }
+

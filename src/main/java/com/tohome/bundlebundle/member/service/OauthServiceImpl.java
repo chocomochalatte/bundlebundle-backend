@@ -1,30 +1,34 @@
 package com.tohome.bundlebundle.member.service;
 
+import com.tohome.bundlebundle.member.mapper.MemberMapper;
+import com.tohome.bundlebundle.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 
-public class OauthServiceImpl {
+import java.util.Optional;
 
+@Service
+@RequiredArgsConstructor
+public class OauthServiceImpl implements OauthService {
 
-    @RequiredArgsConstructor
-    @Component
-    public class KakaoUserInfo {
-        private final WebClient webClient;
-        private static final String USER_INFO_URI = "https://kapi.kakao.com/v2/user/me";
+    private final KakaoClient kakaoClient;
+    private final MemberMapper memberMapper;
 
-        public KakaoUserInfoResponse getUserInfo(String token) {
-            String uri = USER_INFO_URI;
-
-            Flux<KakaoUserInfoResponse> response = webClient.get()
-                    .uri(uri)
-                    .header("Authorization", "Bearer " + token)
-                    .retrieve()
-                    .bodyToFlux(KakaoUserInfoResponse.class);
-
-            return response.blockFirst();
+    @Override
+    public MemberVO loginOauthService(String token) throws Exception {
+        MemberVO user = kakaoClient.getUser(token);
+        //이메일에 의해서 찾아오기
+        Mapper mapper;
+        System.out.println("token check - after assign mapper : " + user.getEmail());
+        Optional<MemberVO> selectedUser = memberMapper.findUserByEmail(user.getEmail());
+        System.out.println("token check - after selectUser : " + selectedUser);
+        if(selectedUser.isPresent()) {//가입이 되어있는 경우
+            memberMapper.updateUser(user);
+            //user.setUserSeq(selectedUser.getUserSeq());
+        } else { //첫 로그인
+            memberMapper.insertUser(user);
         }
-    }
-
-
+        return user;
+    };
 }
