@@ -26,14 +26,12 @@ public class OatuhController {
 
 	@PostMapping(value = "/oauth/token/{id}")
 	@ResponseBody
-	public ResponseEntity<String> inquireCart1(@PathVariable String id) throws Exception {
+	public ResponseEntity<String> oauthTokenLogin(@PathVariable String id) throws Exception {
 		System.out.println("token from Android: " + id);
 
 		MemberVO user = OauthService.loginOauthService(id);
-
-		System.out.println("MemberVO result: " + user);
 		String token = jwtTokenUtils.generateJwtToken(user);
-		return new ResponseEntity<String>(id, HttpStatus.OK);
+		return new ResponseEntity<String>(token, HttpStatus.OK);
 
 	}
 

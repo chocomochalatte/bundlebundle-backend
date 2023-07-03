@@ -23,6 +23,8 @@ public class JwtTokenUtils {
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("email", user.getEmail());
         claims.put("address", user.getAddress());
+        System.out.println("user result: " + user);
+        System.out.println("claimn result: " + claims);
         // 필요한 경우 추가적인 클레임 설정
 
         return Jwts.builder()
