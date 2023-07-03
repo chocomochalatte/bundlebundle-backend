@@ -15,4 +15,5 @@ public class GroupCartProductVO {
 	private String productThumbnailImg;
 	private	int productPrice;
 	private int productCnt;
+	private int discountRate;
 }
