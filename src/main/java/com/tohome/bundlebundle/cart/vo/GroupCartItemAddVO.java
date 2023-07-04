@@ -11,4 +11,5 @@ public class GroupCartItemAddVO {
 	private int productId;
 	private int memberId;
 	private int groupId;
+	private int productCnt;
 }

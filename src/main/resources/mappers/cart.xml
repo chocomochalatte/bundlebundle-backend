@@ -58,8 +58,8 @@
     
     <insert id="addCartItem" parameterType="CartItemAddVO" >
     	<![CDATA[
-    		INSERT INTO PERSONAL_CART (PRODUCT_ID, MEMBER_ID)
-			VALUES (#{productId},#{memberId})
+    		INSERT INTO PERSONAL_CART (PRODUCT_ID, MEMBER_ID, PRODUCT_CNT)
+			VALUES (#{productId},#{memberId},#{productCnt})
     	]]>
     </insert>
     
@@ -135,8 +135,8 @@
     <!--  그룹 장바구니에 상품 추가하기 -->
     <insert id="addGroupCartItem" parameterType="groupCartItemAddVO" >
     	<![CDATA[
-    		INSERT INTO GROUP_MEMBER_CART (GROUP_ID, PRODUCT_ID, MEMBER_ID)
-			VALUES (#{groupId}, #{productId}, #{memberId})
+    		INSERT INTO GROUP_MEMBER_CART (GROUP_ID, PRODUCT_ID, MEMBER_ID,PRODUCT_CNT)
+			VALUES (#{groupId}, #{productId}, #{memberId},#{productCnt})
     	]]>
     </insert>
     
