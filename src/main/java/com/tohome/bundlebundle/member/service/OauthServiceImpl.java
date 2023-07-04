@@ -20,15 +20,15 @@ public class OauthServiceImpl implements OauthService {
         MemberVO user = kakaoClient.getUser(token);
         //이메일에 의해서 찾아오기
         Mapper mapper;
-        System.out.println("token check - after assign mapper : " + user.getEmail());
         Optional<MemberVO> selectedUser = memberMapper.findUserByEmail(user.getEmail());
-        System.out.println("token check - after selectUser : " + selectedUser);
         if(selectedUser.isPresent()) {//가입이 되어있는 경우
             memberMapper.updateUser(user);
             //user.setUserSeq(selectedUser.getUserSeq());
         } else { //첫 로그인
             memberMapper.insertUser(user);
         }
+        user.setGroupId(selectedUser.get().getGroupId());
+        user.setId(selectedUser.get().getId());
         return user;
     };
 }

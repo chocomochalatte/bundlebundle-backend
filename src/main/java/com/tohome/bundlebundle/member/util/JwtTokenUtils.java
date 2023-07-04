@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 
+import javax.crypto.SecretKey;
+import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 @Component
 public class JwtTokenUtils {
-    //private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); //HS256알고리즘으로 키 생성
-    @Value("${SECRET_KEY}")
-    private String SECRET_KEY;
+    private static final byte[] SECRET_KEY = DatatypeConverter.parseHexBinary("236979CB6F1AD6B6A6184A31E6BE37DB3818CC36871E26235DD67DCFE4041492");
     private static final long EXPIRATION_TIME = 86400000; // 24시간 (단위: 밀리초)
 
     // JWT 토큰 생성
@@ -22,10 +22,13 @@ public class JwtTokenUtils {
         Date now = new Date();
         Date expirationDate = new Date(now.getTime() + EXPIRATION_TIME);
 
-        Claims claims = Jwts.claims().setSubject(user.getUsername());
+        Claims claims = Jwts.claims().setSubject("JWTToken");
+        claims.put("username", user.getUsername());
         claims.put("email", user.getEmail());
         claims.put("address", user.getAddress());
-        System.out.println("user result: " + user);
+        claims.put("id", user.getId());
+        claims.put("groupId", user.getGroupId());
+        claims.put("userProfileImg", user.getUserProfileImg());
         System.out.println("claimn result: " + claims);
         // 필요한 경우 추가적인 클레임 설정
 
@@ -63,4 +66,6 @@ public class JwtTokenUtils {
 
         return user;
     }
+
+
 }

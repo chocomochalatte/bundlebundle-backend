@@ -31,9 +31,9 @@ public class OatuhController {
 	@PostMapping(value = "/oauth/token/{id}")
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> oauthTokenLogin(@PathVariable String id) throws Exception {
-		System.out.println("token from Android: " + id);
 
 		MemberVO user = OauthService.loginOauthService(id);
+
 		String token = jwtTokenUtils.generateJwtToken(user);
 
 		Map<String, String> loginTokenVO = new HashMap<>();
