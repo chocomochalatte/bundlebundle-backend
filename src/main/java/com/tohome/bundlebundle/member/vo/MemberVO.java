@@ -26,5 +26,6 @@ public class MemberVO {
     private Timestamp created_at;
     private String groupNickname;
     private Integer groupId;
+    @JsonProperty("profile_image_url")
     private String userProfileImg;
 }

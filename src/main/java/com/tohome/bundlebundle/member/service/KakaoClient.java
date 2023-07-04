@@ -30,7 +30,6 @@ public class KakaoClient {
         if (response.getStatusCode() == HttpStatus.OK) {
             KakaoUserResponse kakaoUserResponse = response.getBody();
             if (kakaoUserResponse != null) {
-                System.out.println("token check - after assign mapper : " + kakaoUserResponse.toMemberVO());
                 return kakaoUserResponse.toMemberVO();
             }
         }

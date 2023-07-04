@@ -6,18 +6,21 @@ import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.group.vo.GroupNicknameVO;
 import com.tohome.bundlebundle.member.service.MemberService;
 import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
+import com.tohome.bundlebundle.member.vo.MemberVO;
+import com.tohome.bundlebundle.member.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Log4j2
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/member")
 public class MemberController {
     private final MemberService memberService;
     private final TempTokenUtil tokenUtil;
+    private final JwtTokenUtils jwtTokenUtils;
+
+
 
     @PatchMapping("/group")
     public ResponseEntity<?> updateGroupNickname(@RequestHeader("Authorization") String accessToken, @RequestBody GroupNicknameVO groupNicknameVO) {
@@ -47,5 +50,16 @@ public class MemberController {
         return ResponseEntity.ok(new GroupIdVO(groupId));
 
     }
+
+    @GetMapping("/info")
+    public ResponseEntity<MemberVO> getInfo(@RequestHeader("Authorization") String token) {
+        // JWT 토큰에서 사용자 정보 추출
+
+        MemberVO user =jwtTokenUtils.getUserFromJwtToken(token);
+        System.out.println("check user after info" + user);
+
+        return ResponseEntity.ok(user);
+    }
+
 
 }
