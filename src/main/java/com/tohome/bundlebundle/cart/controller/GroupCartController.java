@@ -40,6 +40,8 @@ public class GroupCartController {
 			List<GroupCartVO> groupCartVO = service.checkMember(groupId);
 			groupVO.setGroupCart(groupCartVO);
 			groupVO.setTotalCnt(groupCartVO.size());
+			// 나중에 토큰으로 멤버 Id를 받아서 세팅해놓기
+			groupVO.setMemberId(1);
 			return new ResponseEntity<GroupCartListVO>(groupVO, HttpStatus.OK);
 		}
 		

@@ -13,5 +13,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class GroupCartListVO {
 	private int totalCnt;
+	private int memberId;	//로그인한 멤버아이디
 	private List<GroupCartVO> groupCart;
 }
