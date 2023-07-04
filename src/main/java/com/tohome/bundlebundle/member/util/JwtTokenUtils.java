@@ -30,7 +30,7 @@ public class JwtTokenUtils {
         claims.put("groupId", user.getGroupId());
         claims.put("userProfileImg", user.getUserProfileImg());
         System.out.println("claimn result: " + claims);
-        // 필요한 경우 추가적인 클레임 설정
+        // 필요한 경우 추가적인 클레임 설정Gou
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -53,8 +53,11 @@ public class JwtTokenUtils {
     // 토큰에서 사용자 정보 추출
     public MemberVO getUserFromJwtToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
-        String username = claims.getSubject();
+        String username = (String)claims.get("username");
         String email = (String) claims.get("email");
+        Integer id = (Integer) claims.get("id");
+        Integer groupId = (Integer) claims.get("groupId");
+        String userProfileImg = (String) claims.get("userProfileImg");
         String address = (String) claims.get("address");
         // 필요한 경우 추가적인 클레임 추출
 
@@ -62,6 +65,10 @@ public class JwtTokenUtils {
         user.setUsername(username);
         user.setEmail(email);
         user.setAddress(address);
+        user.setId(id);
+        user.setGroupId(groupId);
+        user.setUserProfileImg(userProfileImg);
+
         // 필요한 경우 추가적인 사용자 정보 설정
 
         return user;

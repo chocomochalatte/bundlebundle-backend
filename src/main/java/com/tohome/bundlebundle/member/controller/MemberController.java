@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
     private final TempTokenUtil tokenUtil;
+    private final JwtTokenUtils jwtTokenUtils;
 
 
 
@@ -54,8 +55,8 @@ public class MemberController {
     public ResponseEntity<MemberVO> getInfo(@RequestHeader("Authorization") String token) {
         // JWT 토큰에서 사용자 정보 추출
 
-        JwtTokenUtils jwtTokenUtils = new JwtTokenUtils();
         MemberVO user =jwtTokenUtils.getUserFromJwtToken(token);
+        System.out.println("check user after info" + user);
 
         return ResponseEntity.ok(user);
     }
