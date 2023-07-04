@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupCartProductVO {
+	private int groupId;
+	private int memberId;
 	private int productId;
 	private String productOrigin;
 	private String productBrand;
@@ -15,4 +17,5 @@ public class GroupCartProductVO {
 	private String productThumbnailImg;
 	private	int productPrice;
 	private int productCnt;
+	private int discountRate;
 }
