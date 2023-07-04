@@ -4,15 +4,17 @@ import com.tohome.bundlebundle.member.vo.MemberVO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 
-import javax.crypto.SecretKey;
 import java.util.Date;
 
 @Component
 public class JwtTokenUtils {
-    private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); //HS256알고리즘으로 키 생성
+    //private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); //HS256알고리즘으로 키 생성
+    @Value("${SECRET_KEY}")
+    private String SECRET_KEY;
     private static final long EXPIRATION_TIME = 86400000; // 24시간 (단위: 밀리초)
 
     // JWT 토큰 생성
