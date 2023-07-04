@@ -104,6 +104,7 @@
     <select id="showGroupItem" parameterType="Integer" resultType="GroupCartProductVO">
         <![CDATA[
          select
+         	g.member_id as memberId,
          	g.product_cnt,
          	g.product_id, 
 		    p.origin as product_origin,
