@@ -5,20 +5,20 @@
 
 <mapper namespace="com.tohome.bundlebundle.order.mapper.OrderMapper">
 
-    <select id="createProductList" parameterType="Integer" resultType="ProductOrderVO">
+    <select id="findAllByGroupId" parameterType="Integer" resultType="ProductOrderVO">
         <![CDATA[
-  SELECT *
-  FROM GROUP_MEMBER_CART g
-  JOIN PRODUCT p ON g.PRODUCT_ID = p.ID
-  WHERE GROUP_ID = #{groupId}
-  ]]>
+          SELECT *
+          FROM GROUP_MEMBER_CART g
+          JOIN PRODUCT p ON g.PRODUCT_ID = p.ID
+          WHERE GROUP_ID = #{groupId}
+          ]]>
     </select>
 
     <insert id="createLog" parameterType="ProductOrderVO">
         <![CDATA[
-  INSERT INTO PRODUCT_ORDER ( price, thumbnail_img_url, name, product_cnt, product_id, member_id)
-  VALUES (#{price}, #{thumbnailImg}, #{name}, #{productCnt}, #{productId}, #{memberId})
-  ]]>
+          INSERT INTO PRODUCT_ORDER ( price, thumbnail_img_url, name, product_cnt, product_id, member_id, order_id)
+          VALUES (#{price}, #{thumbnailImg}, #{name}, #{productCnt}, #{productId}, #{memberId}, #{orderId})
+          ]]>
     </insert>
 
 
@@ -31,9 +31,29 @@
 
     <select id="getLog" parameterType="Integer" resultType="ProductOrderVO">
         <![CDATA[
-  SELECT *
-  FROM PRODUCT_ORDER
-  WHERE MEMBER_ID = #{memberId}
-    ]]>
+          SELECT *
+          FROM PRODUCT_ORDER
+          WHERE MEMBER_ID = #{memberId}
+        ]]>
     </select>
+
+    <insert id="createOrder" parameterType="OrderVO">
+        <![CDATA[
+        INSERT INTO "ORDER" (MEMBER_ID, GROUP_ID) VALUES (#{memberId}, #{groupId})
+        ]]>
+        <selectKey keyProperty="id" resultType="Integer">
+            <![CDATA[
+            SELECT ORDER_SEQ.CURRVAL FROM DUAL
+            ]]>
+        </selectKey>
+    </insert>
+
+    <select id="findAllById" parameterType="Integer" resultType="ProductOrderVO">
+        <![CDATA[
+        SELECT *
+        FROM PRODUCT_ORDER
+        WHERE ORDER_ID = #{orderId}
+        ]]>
+    </select>
+
 </mapper>

@@ -19,4 +19,5 @@ public class ProductOrderVO {
     private  String origin;
     private String packageType;
     private Integer productCnt;
+    private Integer orderId;
 }
