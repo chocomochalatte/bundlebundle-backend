@@ -55,7 +55,10 @@ public class GroupCartController {
 
     //그룹 장바구니에 상품 추가하기
     @PostMapping
-    public ResponseEntity<GroupCartItemAddVO> addItemCart(@RequestBody GroupCartItemAddVO groupCartItemAddVO) {
+    public ResponseEntity<GroupCartItemAddVO> addItemCart(@RequestHeader("Authorization") String accessToken, @RequestBody GroupCartItemAddVO groupCartItemAddVO) {
+        MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
+        groupCartItemAddVO.setMemberId(memberVO.getId());
+        groupCartItemAddVO.setGroupId(memberVO.getGroupId());
         service.addGroupCartItem(groupCartItemAddVO);
         return new ResponseEntity<>(groupCartItemAddVO, HttpStatus.OK);
     }
