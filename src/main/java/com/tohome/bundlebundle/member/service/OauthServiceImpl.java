@@ -22,7 +22,7 @@ public class OauthServiceImpl implements OauthService {
         Mapper mapper;
         Optional<MemberVO> selectedUser = memberMapper.findUserByEmail(user.getEmail());
         if(selectedUser.isPresent()) {//가입이 되어있는 경우
-            memberMapper.updateUser(user);
+            //memberMapper.updateUser(user);
             //user.setUserSeq(selectedUser.getUserSeq());
         } else { //첫 로그인
             memberMapper.insertUser(user);
