@@ -1,22 +1,15 @@
 package com.tohome.bundlebundle.cart.controller;
 
-import java.util.List;
-
-
+import com.tohome.bundlebundle.cart.service.CartService;
+import com.tohome.bundlebundle.cart.vo.*;
 import com.tohome.bundlebundle.member.util.JwtTokenUtils;
 import com.tohome.bundlebundle.member.vo.MemberVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.tohome.bundlebundle.cart.service.CartService;
-import com.tohome.bundlebundle.cart.vo.CartItemAddVO;
-import com.tohome.bundlebundle.cart.vo.CartProductVO;
-import com.tohome.bundlebundle.cart.vo.CartVO;
-import com.tohome.bundlebundle.cart.vo.ChangeCartVO;
-import com.tohome.bundlebundle.cart.vo.CheckVO;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "api/cart")
@@ -25,7 +18,7 @@ public class MyCartController {
 	private final JwtTokenUtils jwtTokenUtils;
 
 	//개인 장바구니 조회
-	@GetMapping(value = "individual/{memberId}")
+	@GetMapping(value = "/individual")
 	@ResponseBody
 	public ResponseEntity<CartVO> checkCart(@RequestHeader("Authorization") String accessToken){
 		MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
@@ -39,7 +32,7 @@ public class MyCartController {
 
 
 	// 개인 장바구니에 상품 조회하기 (추가 전에 중복 확인)
-	@GetMapping(value = "check/{memberId}/{productId}")
+	@GetMapping(value = "/check/{productId}")
 	public ResponseEntity<CheckVO> checkItemCart(@RequestHeader("Authorization") String accessToken, @PathVariable("productId") int productId){
 		MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
 		CartItemAddVO cartItemAddVO = CartItemAddVO.builder()
@@ -58,7 +51,7 @@ public class MyCartController {
 	}
 
 	// 개인 장바구니에 상품 삭제하기
-	@DeleteMapping(value = "{memberId}/{productId}")
+	@DeleteMapping(value = "/{productId}")
 	public ResponseEntity<CheckVO> deleteCart(@RequestHeader("Authorization") String accessToken, @PathVariable("productId") int productId){
 		MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
 		CartItemAddVO cartItemAddVO = CartItemAddVO.builder()
@@ -70,7 +63,7 @@ public class MyCartController {
 	}
 
 	// 개인 장바구니에서 상품 수량 변경하기
-	@PatchMapping(value = "{memberId}/{productId}/{productCnt}")
+	@PatchMapping(value = "/{productId}/{productCnt}")
 	public ResponseEntity<ChangeCartVO> changeProductCnt(@RequestHeader("Authorization") String accessToken,
 														 @PathVariable("productId") int productId, @PathVariable("productCnt") int productCnt){
 		MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
