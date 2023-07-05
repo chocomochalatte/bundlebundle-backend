@@ -16,8 +16,8 @@
 
     <insert id="createLog" parameterType="ProductOrderVO">
         <![CDATA[
-          INSERT INTO PRODUCT_ORDER ( price, thumbnail_img_url, name, product_cnt, product_id, member_id, order_id)
-          VALUES (#{price}, #{thumbnailImg}, #{name}, #{productCnt}, #{productId}, #{memberId}, #{orderId})
+          INSERT INTO PRODUCT_ORDER ( price, thumbnail_img, name, product_cnt, product_id, member_id, order_id, group_id)
+          VALUES (#{price}, #{thumbnailImg}, #{name}, #{productCnt}, #{productId}, #{memberId}, #{orderId}, #{groupId})
           ]]>
     </insert>
 
