@@ -4,7 +4,6 @@ import com.tohome.bundlebundle.group.vo.GroupMemberVO;
 import com.tohome.bundlebundle.group.vo.GroupNicknameVO;
 import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
 import com.tohome.bundlebundle.member.vo.MemberVO;
-import org.springframework.lang.NonNull;
 
 public interface MemberService {
 
