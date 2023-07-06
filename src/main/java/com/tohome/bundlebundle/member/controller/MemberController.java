@@ -35,6 +35,7 @@ public class MemberController {
     @PostMapping("/group-join")
     public ResponseEntity<?> joinGroup(@RequestHeader("Authorization") String accessToken, @RequestBody GroupMemberVO groupMemberVO) {
         MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
+        groupMemberVO.addMemberId(memberVO.getId());
         GroupMemberVO response = memberService.joinGroup(memberVO.getId(), groupMemberVO);
         return ResponseEntity.ok(response);
     }

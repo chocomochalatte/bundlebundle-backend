@@ -45,7 +45,9 @@ public class MyCartController {
 
 	// 개인 장바구니에 상품 추가하기
 	@PostMapping(value = "")
-	public ResponseEntity<CartItemAddVO> addItemCart(@RequestBody CartItemAddVO cartItemAddVO) {
+	public ResponseEntity<CartItemAddVO> addItemCart(@RequestHeader("Authorization") String accessToken, @RequestBody CartItemAddVO cartItemAddVO) {
+		MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
+		cartItemAddVO.setMemberId(memberVO.getId());
 		service.addCartItem(cartItemAddVO);
 		return new ResponseEntity<>(cartItemAddVO, HttpStatus.OK);
 	}
