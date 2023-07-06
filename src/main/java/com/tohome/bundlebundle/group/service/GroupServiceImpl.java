@@ -33,8 +33,13 @@ public class GroupServiceImpl implements GroupService {
         // 2. 그룹 닉네임 업데이트
         GroupMemberVO groupMemberVO = new GroupMemberVO(createdGroupVO, groupNicknameVO);
         updateGroupNickname(groupMemberVO);
-
-        // 3. 생성된 그룹 정보 리턴
+        
+        System.out.println("fdfd" + groupMemberVO.getGroupId());
+        // 3. token값 그룹에 입력
+        
+        groupMapper.insertToken(groupMemberVO);
+        
+        // 4. 생성된 그룹 정보 리턴
         return createdGroupVO;
     }
 
