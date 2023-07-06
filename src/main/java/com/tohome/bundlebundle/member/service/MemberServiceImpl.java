@@ -43,7 +43,6 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
         checkMemberId(memberId);
-        groupMemberVO.addMemberId(memberId);
 
         Integer groupId = memberMapper.findGroupIdById(memberId);
         checkIfGroupNotExists(groupId);
