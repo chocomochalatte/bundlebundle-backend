@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GroupNicknameVO {
     private String groupNickname;
+    private String token;
 }
