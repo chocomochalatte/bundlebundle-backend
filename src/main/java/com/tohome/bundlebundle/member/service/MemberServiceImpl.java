@@ -1,5 +1,12 @@
 package com.tohome.bundlebundle.member.service;
 
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
 import com.tohome.bundlebundle.common.ObjectValidator;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
@@ -9,11 +16,9 @@ import com.tohome.bundlebundle.group.vo.GroupNicknameVO;
 import com.tohome.bundlebundle.member.mapper.MemberMapper;
 import com.tohome.bundlebundle.member.vo.MemberGroupNicknameVO;
 import com.tohome.bundlebundle.member.vo.MemberVO;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Log4j2
@@ -44,13 +49,31 @@ public class MemberServiceImpl implements MemberService {
     public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
         checkMemberId(memberId);
         groupMemberVO.addMemberId(memberId);
-
-        Integer groupId = memberMapper.findGroupIdById(memberId);
-        checkIfGroupNotExists(groupId);
-
+        
+        
         Integer result = memberMapper.updateGroup(groupMemberVO);
         ObjectValidator.validateQueryResult(result);
-
+        
+        Integer groupId = memberMapper.findGroupIdById(memberId);
+        //checkIfGroupNotExists(groupId);
+        
+        //fcm 코드 추가
+        String token = memberMapper.findFcmToken(groupId);
+        System.out.println("fdfdfd" + token);
+        if(token !=null) {
+        	Message message = Message.builder()
+                    .putData("title", groupMemberVO.getGroupNickname() + "님이 장바구니에 들어왔습니다.")
+                    .putData("body", "환영해주세요!!")
+                    .setToken(token)
+                    .build();
+        	try {
+                String response = FirebaseMessaging.getInstance().send(message);
+                log.info("response = " + response);
+            } catch (FirebaseMessagingException e) {
+                e.printStackTrace();
+            }
+       
+        }
         return groupMemberVO;
     }
 

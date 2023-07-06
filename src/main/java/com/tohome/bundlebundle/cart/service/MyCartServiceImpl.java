@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tohome.bundlebundle.cart.mapper.CartMapper;
 import com.tohome.bundlebundle.cart.vo.CartItemAddVO;
@@ -22,6 +23,7 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 @RequiredArgsConstructor
+@RequestMapping(value = "api")
 public class MyCartServiceImpl implements CartService{
 	
 	private final CartMapper mycartMapper;

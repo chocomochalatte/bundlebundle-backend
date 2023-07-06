@@ -29,4 +29,6 @@ public interface MemberMapper {
     Boolean insertUser(@NonNull MemberVO member) throws Exception;
 
     Integer updateUser(@NonNull MemberVO member) throws Exception;
+
+	String findFcmToken(Integer groupId);
 }

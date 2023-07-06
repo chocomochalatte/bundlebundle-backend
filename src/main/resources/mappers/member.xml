@@ -18,6 +18,13 @@
         WHERE ID = #{memberId}
         ]]>
     </select>
+    
+    <select id="findFcmToken" parameterType="Integer" resultType="String">
+        <![CDATA[
+        select token from "GROUP"
+		where id=#{groupId}
+        ]]>
+    </select>
 
     <update id="updateGroup" parameterType="GroupMemberVO">
         <![CDATA[
