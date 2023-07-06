@@ -5,6 +5,7 @@ import com.tohome.bundlebundle.cart.service.GroupCartService;
 import com.tohome.bundlebundle.cart.vo.*;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
+import com.tohome.bundlebundle.member.service.MemberService;
 import com.tohome.bundlebundle.member.util.JwtTokenUtils;
 import com.tohome.bundlebundle.member.vo.MemberVO;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,14 @@ import java.util.Optional;
 @RequestMapping(value = "/api/cart/group")
 public class GroupCartController {
     private final GroupCartService service;
+    private final MemberService memberService;
     private final JwtTokenUtils jwtTokenUtils;
 
     //그룹 장바구니 조회
     @GetMapping
     public ResponseEntity<GroupCartListVO> showItems(@RequestHeader("Authorization") String accessToken) {
         MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
-		Integer groupId = Optional.ofNullable(memberVO.getGroupId())
+		Integer groupId = Optional.ofNullable(memberService.findPresentGroupId(memberVO.getId()))
                 .orElseThrow(() -> new BusinessException(ErrorCode.GROUP_NOT_FOUND));
 
         // 1. 팀 내에 어떤 멤버가 있는지 확인
@@ -44,10 +46,11 @@ public class GroupCartController {
     @GetMapping(value = "/check/{productId}")
     public ResponseEntity<CheckVO> checkGroupItemCart(@RequestHeader("Authorization") String accessToken, @PathVariable("productId") int productId) {
 		MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
-		GroupCartItemAddVO groupCartItemAddVO = GroupCartItemAddVO.builder()
+        Integer groupId = memberService.findPresentGroupId(memberVO.getId());
+        GroupCartItemAddVO groupCartItemAddVO = GroupCartItemAddVO.builder()
 																  .memberId(memberVO.getId())
 															  	  .productId(productId)
-																  .groupId(memberVO.getGroupId())
+                                                                  .groupId(groupId)
 															  	  .build();
         CheckVO result = service.groupCheckItemCart(groupCartItemAddVO);
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -57,8 +60,9 @@ public class GroupCartController {
     @PostMapping
     public ResponseEntity<GroupCartItemAddVO> addItemCart(@RequestHeader("Authorization") String accessToken, @RequestBody GroupCartItemAddVO groupCartItemAddVO) {
         MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
+        Integer groupId = memberService.findPresentGroupId(memberVO.getId());
         groupCartItemAddVO.setMemberId(memberVO.getId());
-        groupCartItemAddVO.setGroupId(memberVO.getGroupId());
+        groupCartItemAddVO.setGroupId(groupId);
         service.addGroupCartItem(groupCartItemAddVO);
         return new ResponseEntity<>(groupCartItemAddVO, HttpStatus.OK);
     }
@@ -67,9 +71,10 @@ public class GroupCartController {
     @DeleteMapping(value = "/{productId}")
     public ResponseEntity<CheckVO> deleteGroupCart(@RequestHeader("Authorization") String accessToken, @PathVariable("productId") int productId) {
         MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
+        Integer groupId = memberService.findPresentGroupId(memberVO.getId());
         GroupCartItemAddVO groupCartItemAddVO = GroupCartItemAddVO.builder()
                                                                   .memberId(memberVO.getId())
-                                                                  .groupId(memberVO.getGroupId())
+                                                                  .groupId(groupId)
                                                                   .productId(productId)
                                                                   .build();
         CheckVO result = service.deleteGroupCartItem(groupCartItemAddVO);
@@ -81,9 +86,10 @@ public class GroupCartController {
     @PatchMapping(value = "/{productId}/{productCnt}")
     public ResponseEntity<GroupChangeCartVO> changeGroupProductCnt(@RequestHeader("Authorization") String accessToken, @PathVariable("productId") int productId, @PathVariable("productCnt") int productCnt) {
 		MemberVO memberVO = jwtTokenUtils.getUserFromJwtToken(accessToken);
+        Integer groupId = memberService.findPresentGroupId(memberVO.getId());
         GroupChangeCartVO groupChangeCartVO = GroupChangeCartVO.builder()
                                                                .memberId(memberVO.getId())
-                                                               .groupId(memberVO.getGroupId())
+                                                               .groupId(groupId)
                                                                .productId(productId)
                                                                .productCnt(productCnt)
                                                                .build();
