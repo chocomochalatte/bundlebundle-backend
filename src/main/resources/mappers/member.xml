@@ -32,6 +32,8 @@
         WHERE id = #{memberId}
         ]]>
     </update>
+    
+    
 
     <update id="updateGroupNickname" parameterType="MemberGroupNicknameVO">
         <![CDATA[

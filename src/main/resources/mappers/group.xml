@@ -28,5 +28,12 @@
         WHERE ID = #{groupId}
         ]]>
     </delete>
+    
+    <insert id="insertToken" parameterType="GroupMemberVO">
+        <![CDATA[
+        	insert into "GROUP" (group_owner_id, token)
+        	values (#{groupId},#{token})
+        ]]>
+    </insert>
 
 </mapper>
