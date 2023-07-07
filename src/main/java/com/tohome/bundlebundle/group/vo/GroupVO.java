@@ -12,4 +12,5 @@ import lombok.Setter;
 public class GroupVO {
     private Integer id;
     private final Integer groupOwnerId;
+    private final String token;
 }
