@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GroupMapper {
 
-    Integer createGroup(GroupVO groupNicknameVO);
+    Integer createGroup(GroupVO groupVO);
 
     Integer findGroupIdByGroupOwnerId(Integer memberId);
 

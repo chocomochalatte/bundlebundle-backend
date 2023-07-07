@@ -28,7 +28,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupVO createGroupCart(Integer memberId, GroupNicknameVO groupNicknameVO) {
 
         // 1. 그룹 생성
-        GroupVO createdGroupVO = createGroup(memberId);
+        GroupVO createdGroupVO = createGroup(memberId, groupNicknameVO.getToken());
 
         // 2. 그룹 닉네임 업데이트
         GroupMemberVO groupMemberVO = new GroupMemberVO(createdGroupVO, groupNicknameVO);
@@ -37,7 +37,7 @@ public class GroupServiceImpl implements GroupService {
         System.out.println("fdfd" + groupMemberVO.getGroupId());
         // 3. token값 그룹에 입력
         
-        groupMapper.insertToken(groupMemberVO);
+//        groupMapper.insertToken(groupMemberVO);
         
         // 4. 생성된 그룹 정보 리턴
         return createdGroupVO;
@@ -72,8 +72,8 @@ public class GroupServiceImpl implements GroupService {
         return groupId;
     }
 
-    private GroupVO createGroup(Integer memberId) {
-        GroupVO groupVO = new GroupVO(memberId);
+    private GroupVO createGroup(Integer memberId, String token) {
+        GroupVO groupVO = new GroupVO(memberId, token);
         Integer groupId = memberMapper.findGroupIdById(memberId);
         checkIfGroupExists(groupId);
 

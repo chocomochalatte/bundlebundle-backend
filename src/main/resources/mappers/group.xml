@@ -8,7 +8,7 @@
 <!--    <insert id="createGroup" parameterType="GroupVO" useGeneratedKeys="true" keyProperty="id">-->
     <insert id="createGroup" parameterType="GroupVO">
         <![CDATA[
-        INSERT INTO "GROUP" (GROUP_OWNER_ID) VALUES (#{groupOwnerId})
+        INSERT INTO "GROUP" (GROUP_OWNER_ID, TOKEN) VALUES (#{groupOwnerId}, #{token})
         ]]>
         <selectKey keyProperty="id" resultType="Integer">
             <![CDATA[
@@ -29,11 +29,5 @@
         ]]>
     </delete>
     
-    <insert id="insertToken" parameterType="GroupMemberVO">
-        <![CDATA[
-        	insert into "GROUP" (group_owner_id, token)
-        	values (#{groupId},#{token})
-        ]]>
-    </insert>
 
 </mapper>
