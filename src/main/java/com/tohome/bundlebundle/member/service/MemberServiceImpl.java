@@ -50,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
         checkMemberId(memberId);
         groupMemberVO.addMemberId(memberId);
         Integer groupId = memberMapper.findGroupIdById(memberId);
-        checkIfGroupNotExists(groupId);
+        //checkIfGroupNotExists(groupId);
         Integer result = memberMapper.updateGroup(groupMemberVO);
         ObjectValidator.validateQueryResult(result);
         
