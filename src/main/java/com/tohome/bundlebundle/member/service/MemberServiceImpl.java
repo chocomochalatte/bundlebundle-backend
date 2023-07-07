@@ -54,7 +54,6 @@ public class MemberServiceImpl implements MemberService {
         Integer result = memberMapper.updateGroup(groupMemberVO);
         ObjectValidator.validateQueryResult(result);
         
-        Integer groupId = memberMapper.findGroupIdById(memberId);
         //checkIfGroupNotExists(groupId);
         
         //fcm 코드 추가
