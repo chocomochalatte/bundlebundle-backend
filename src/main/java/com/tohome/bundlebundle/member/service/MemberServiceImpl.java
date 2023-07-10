@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Integer findPresentGroupId(Integer memberId) {
         checkMemberId(memberId);
-        return memberMapper.findGroupIdById(memberId);
+        return memberMapper.findGroupIdById(memberId).orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_GROUP_NOT_FOUND));
     }
 
     @Override
@@ -49,13 +49,10 @@ public class MemberServiceImpl implements MemberService {
     public GroupMemberVO joinGroup(Integer memberId, GroupMemberVO groupMemberVO) {
         checkMemberId(memberId);
         groupMemberVO.addMemberId(memberId);
-        Integer groupId = memberMapper.findGroupIdById(memberId);
-        //checkIfGroupNotExists(groupId);
+        Integer groupId = memberMapper.findGroupIdById(memberId).orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_GROUP_NOT_FOUND));
         Integer result = memberMapper.updateGroup(groupMemberVO);
         ObjectValidator.validateQueryResult(result);
-        
-        //checkIfGroupNotExists(groupId);
-        
+
         //fcm 코드 추가
         String token = memberMapper.findFcmToken(groupId);
         System.out.println("fdfdfd" + token);
@@ -81,8 +78,7 @@ public class MemberServiceImpl implements MemberService {
     public Integer getOutOfGroup(Integer memberId) {
         findMemberById(memberId);
 
-        Integer groupId = memberMapper.findGroupIdById(memberId);
-        checkIfGroupExist(groupId);
+        Integer groupId = memberMapper.findGroupIdById(memberId).orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_GROUP_NOT_FOUND));
         checkIfIsGroupMember(memberId);
 
         Integer result = memberMapper.deleteGroupIdById(memberId);
@@ -117,12 +113,6 @@ public class MemberServiceImpl implements MemberService {
         log.info("memberID=" + memberId);
         MemberVO memberVO = memberMapper.findMemberById(memberId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_NOT_FOUND));
-    }
-
-    private void checkIfGroupNotExists(Integer groupId) {
-        if (groupId != null) {
-            throw new BusinessException(ErrorCode.GROUP_ALREADY_EXIST);
-        }
     }
 
     private void checkIfGroupExist(Integer groupId) {

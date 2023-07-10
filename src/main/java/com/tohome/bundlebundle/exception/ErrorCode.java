@@ -19,6 +19,7 @@ public enum ErrorCode {
     NOT_A_GROUP_OWNER("NOT_A_GROUP_OWNER", "그룹장이 아니기 때문에 권한이 없습니다.", 403),
     MEMBER_GROUP_NOT_FOUND("MEMBER_GROUP_NOT_FOUND", "아무 그룹에도 속해있지 않습니다.", 404),
     IS_A_GROUP_OWNER("IS_A_GROUP_OWNER", "그룹장이기 때문에 그룹에서 나갈 수 없습니다.", 404),
+    ORDER_CREATE_FAILURE("ORDER_CREATE_FAILURE", "주문 생성하기에 실패하였습니다.", 404),
 
     // Spring Basic Exceptions
     INVALID_INPUT_VALUE("INVALID_INPUT_VALUE", "유효하지 않은 입력값입니다.", 400),

@@ -5,31 +5,30 @@
 
 <mapper namespace="com.tohome.bundlebundle.order.mapper.OrderMapper">
 
-    <select id="findAllByGroupId" parameterType="Integer" resultType="ProductOrderVO">
+    <insert id="createLog" parameterType="GroupCartOrderVO">
         <![CDATA[
-          SELECT *
-          FROM GROUP_MEMBER_CART g
-          JOIN PRODUCT p ON g.PRODUCT_ID = p.ID
-          WHERE GROUP_ID = #{groupId}
-          ]]>
-    </select>
-
-    <insert id="createLog" parameterType="ProductOrderVO">
-        <![CDATA[
-          INSERT INTO PRODUCT_ORDER ( price, thumbnail_img, name, product_cnt, product_id, member_id, order_id, group_id)
+          INSERT INTO PRODUCT_ORDER (price, thumbnail_img, name, product_cnt, product_id, member_id, order_id, group_id)
           VALUES (#{price}, #{thumbnailImg}, #{name}, #{productCnt}, #{productId}, #{memberId}, #{orderId}, #{groupId})
           ]]>
     </insert>
 
+<!--    <insert id="createLogs" parameterType="java.util.List">-->
+<!--        INSERT ALL-->
+<!--            <foreach collection="list" item="item">-->
+<!--                INTO PRODUCT_ORDER (price, thumbnail_img, name, product_cnt, product_id, member_id, order_id, group_id)-->
+<!--                VALUES (#{item.price}, #{item.thumbnailImg}, #{item.name}, #{item.productCnt}, #{item.productId}, #{item.memberId}, #{item.orderId}, #{item.groupId})-->
+<!--            </foreach>-->
+<!--        SELECT 1 FROM DUAL-->
+<!--    </insert>-->
 
-    <delete id="deleteOrder" parameterType="Integer">
-        <![CDATA[
-    DELETE FROM GROUP_MEMBER_CART
-    WHERE GROUP_ID = #{groupId}
-    ]]>
-    </delete>
+<!--    <insert id="insertProductOrdersBatch" parameterType="java.util.List">-->
+<!--        <foreach collection="list" item="item" separator=";">-->
+<!--            INSERT INTO PRODUCT_ORDER (price, thumbnail_img, name, product_cnt, product_id, member_id, order_id, group_id)-->
+<!--            VALUES (#{item.price}, #{item.thumbnailImg}, #{item.name}, #{item.productCnt}, #{item.productId}, #{item.memberId}, #{item.orderId}, #{item.groupId})-->
+<!--        </foreach>-->
+<!--    </insert>-->
 
-    <select id="getLog" parameterType="Integer" resultType="ProductOrderVO">
+    <select id="getLog" parameterType="Integer" resultType="GroupCartOrderVO">
         <![CDATA[
           SELECT *
           FROM PRODUCT_ORDER
@@ -41,14 +40,14 @@
         <![CDATA[
         INSERT INTO "ORDER" (MEMBER_ID, GROUP_ID) VALUES (#{memberId}, #{groupId})
         ]]>
-        <selectKey keyProperty="id" resultType="Integer">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
             <![CDATA[
             SELECT ORDER_SEQ.CURRVAL FROM DUAL
             ]]>
         </selectKey>
     </insert>
 
-    <select id="findAllById" parameterType="Integer" resultType="ProductOrderVO">
+    <select id="findAllById" parameterType="Integer" resultType="GroupCartOrderVO">
         <![CDATA[
         SELECT *
         FROM PRODUCT_ORDER

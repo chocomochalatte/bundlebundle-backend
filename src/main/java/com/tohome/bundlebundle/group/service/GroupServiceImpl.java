@@ -74,7 +74,8 @@ public class GroupServiceImpl implements GroupService {
 
     private GroupVO createGroup(Integer memberId, String token) {
         GroupVO groupVO = new GroupVO(memberId, token);
-        Integer groupId = memberMapper.findGroupIdById(memberId);
+        Integer groupId = memberMapper.findGroupIdById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_GROUP_NOT_FOUND));
         checkIfGroupExists(groupId);
 
         Integer result = groupMapper.createGroup(groupVO);

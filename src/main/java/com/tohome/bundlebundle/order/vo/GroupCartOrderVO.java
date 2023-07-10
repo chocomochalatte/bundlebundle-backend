@@ -5,7 +5,8 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class ProductOrderVO {
+public class GroupCartOrderVO {
+    private Integer orderId;
     private Integer productId;
     private Integer memberId;
     private Integer groupId;
@@ -14,5 +15,4 @@ public class ProductOrderVO {
     private Timestamp createdAt;
     private String name;
     private Integer productCnt;
-    private Integer orderId;
 }

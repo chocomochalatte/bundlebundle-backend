@@ -1,15 +1,15 @@
 package com.tohome.bundlebundle.order.service;
 
 import com.tohome.bundlebundle.order.vo.OrderVO;
-import com.tohome.bundlebundle.order.vo.ProductOrderVO;
+import com.tohome.bundlebundle.order.vo.GroupCartOrderVO;
 
 import java.util.List;
 
 public interface OrderCartService {
 
-    OrderVO orderGroupCart(OrderVO requestVO);
+    OrderVO orderGroupCart(Integer memberId);
 
-    List<ProductOrderVO> getLog(Integer memberId);
+    List<GroupCartOrderVO> getLog(Integer memberId);
 
-    List<ProductOrderVO> showOrderResult(Integer orderId);
+    List<GroupCartOrderVO> showOrderResult(Integer orderId);
 }
