@@ -133,7 +133,7 @@
     
     
     <!--  그룹 장바구니에 상품 추가하기 -->
-    <insert id="addGroupCartItem" parameterType="groupCartItemAddVO" >
+    <insert id="addGroupCartItem" parameterType="groupCartItemAddVO">
     	<![CDATA[
     		INSERT INTO GROUP_MEMBER_CART (GROUP_ID, PRODUCT_ID, MEMBER_ID,PRODUCT_CNT)
 			VALUES (#{groupId}, #{productId}, #{memberId},#{productCnt})

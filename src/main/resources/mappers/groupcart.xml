@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tohome.bundlebundle.cart.mapper.GroupCartMapper">
+
+    <select id="findAllByGroupId" parameterType="Integer" resultType="GroupCartOrderVO">
+        <![CDATA[
+        SELECT *
+        FROM GROUP_MEMBER_CART g
+            JOIN PRODUCT p
+            ON g.PRODUCT_ID = p.ID
+        WHERE GROUP_ID = #{groupId}
+        ]]>
+    </select>
+
+    <delete id="deleteAllByGroupId" parameterType="Integer">
+        <![CDATA[
+        DELETE FROM GROUP_MEMBER_CART
+        WHERE GROUP_ID = #{groupId}
+        ]]>
+    </delete>
+
+</mapper>

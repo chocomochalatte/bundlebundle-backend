@@ -3,8 +3,8 @@ package com.tohome.bundlebundle.order.controller;
 import com.tohome.bundlebundle.member.util.JwtTokenUtils;
 import com.tohome.bundlebundle.member.vo.MemberVO;
 import com.tohome.bundlebundle.order.service.OrderCartService;
+import com.tohome.bundlebundle.order.vo.GroupCartOrderVO;
 import com.tohome.bundlebundle.order.vo.OrderVO;
-import com.tohome.bundlebundle.order.vo.ProductOrderVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,15 +30,15 @@ public class OrderController {
     @PostMapping("/groupcart")
     public ResponseEntity<OrderVO> orderGroupCart(@RequestHeader("Authorization") String token) {
         MemberVO user = jwtTokenUtils.getUserFromJwtToken(token);
-        OrderVO result = service.orderGroupCart(new OrderVO(user.getId(), user.getGroupId()));
+        OrderVO result = service.orderGroupCart(user.getId());
         return ResponseEntity.ok().body(result);
     }
 
     // 나의 주문내역 확인
     @GetMapping("/log")
-    public ResponseEntity<List<ProductOrderVO>> getLog(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<GroupCartOrderVO>> getLog(@RequestHeader("Authorization") String token) {
         MemberVO user =jwtTokenUtils.getUserFromJwtToken(token);
-        List<ProductOrderVO> logList = service.getLog(user.getId());
+        List<GroupCartOrderVO> logList = service.getLog(user.getId());
         return ResponseEntity.ok(logList);
     }
 
@@ -51,8 +51,8 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<List<ProductOrderVO>> showOrderResult(@RequestHeader("Authorization") String token, @PathVariable Integer orderId) {
-        List<ProductOrderVO> orderResult = service.showOrderResult(orderId);
+    public ResponseEntity<List<GroupCartOrderVO>> showOrderResult(@RequestHeader("Authorization") String token, @PathVariable Integer orderId) {
+        List<GroupCartOrderVO> orderResult = service.showOrderResult(orderId);
         return ResponseEntity.ok(orderResult);
     }
 }

@@ -1,7 +1,7 @@
 package com.tohome.bundlebundle.order.mapper;
 
+import com.tohome.bundlebundle.order.vo.GroupCartOrderVO;
 import com.tohome.bundlebundle.order.vo.OrderVO;
-import com.tohome.bundlebundle.order.vo.ProductOrderVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,16 +9,18 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
 
-    List<ProductOrderVO> findAllByGroupId(OrderVO orderVO);
-
     Integer createOrder(OrderVO orderVO);
 
-    Integer createLog (ProductOrderVO productOrderVO);
+    Integer createLog (GroupCartOrderVO groupCartOrderVO);
+
+    Integer insertProductOrdersBatch(List<GroupCartOrderVO> orders);
+
+    Integer createLogs(List<GroupCartOrderVO> orders);
 
     Integer deleteOrder (Integer groupId);
 
-    List<ProductOrderVO> getLog (Integer memberId);
+    List<GroupCartOrderVO> getLog (Integer memberId);
 
-    List<ProductOrderVO> findAllById(Integer orderId);
+    List<GroupCartOrderVO> findAllById(Integer orderId);
 
 }

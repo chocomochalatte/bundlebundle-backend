@@ -28,6 +28,6 @@
         WHERE ID = #{groupId}
         ]]>
     </delete>
-    
+
 
 </mapper>

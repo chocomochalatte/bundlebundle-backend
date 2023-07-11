@@ -16,7 +16,7 @@ public interface MemberMapper {
 
     Optional<MemberVO> findUserByEmail(String email);
 
-    Integer findGroupIdById(Integer memberId);
+    Optional<Integer> findGroupIdById(Integer memberId);
 
     Integer updateGroup(GroupMemberVO groupMemberVO);
 
