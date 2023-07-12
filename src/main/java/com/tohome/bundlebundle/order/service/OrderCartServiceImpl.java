@@ -3,6 +3,7 @@ package com.tohome.bundlebundle.order.service;
 import com.tohome.bundlebundle.cart.mapper.GroupCartMapper;
 import com.tohome.bundlebundle.exception.BusinessException;
 import com.tohome.bundlebundle.exception.ErrorCode;
+import com.tohome.bundlebundle.group.mapper.GroupMapper;
 import com.tohome.bundlebundle.member.mapper.MemberMapper;
 import com.tohome.bundlebundle.order.mapper.OrderMapper;
 import com.tohome.bundlebundle.order.vo.GroupCartOrderVO;
@@ -19,12 +20,19 @@ public class OrderCartServiceImpl implements OrderCartService{
     private final OrderMapper orderMapper;
     private final MemberMapper memberMapper;
     private final GroupCartMapper groupCartMapper;
+    private final GroupMapper groupMapper;
 
     @Transactional
     public OrderVO orderGroupCart(Integer memberId) {
         // 1. order 생성하기
         Integer groupId = memberMapper.findGroupIdById(memberId)
                                       .orElseThrow(() -> new BusinessException(ErrorCode.MEMBER_GROUP_NOT_FOUND));
+
+        Integer owningGroupId = groupMapper.findGroupIdByGroupOwnerId(memberId);
+        if (owningGroupId != groupId) {
+            throw new BusinessException(ErrorCode.NOT_A_GROUP_OWNER);
+        }
+
         OrderVO orderVO = new OrderVO(memberId, groupId);
         orderMapper.createOrder(orderVO);
         Integer orderId = orderVO.getId();
